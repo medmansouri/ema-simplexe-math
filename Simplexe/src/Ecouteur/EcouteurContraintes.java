@@ -24,19 +24,9 @@ public class EcouteurContraintes implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e)
 	{			
-		for(int i=0;i<ihmContraintes.getTabSigne().size();i++)
-		{
-			if(ihmContraintes.getTabSigne().get(i).getSelectedItem()=="<=" || ihmContraintes.getTabSigne().get(i).getSelectedItem()==">=")
-			{
-				nbVariablesEcart++;
-			}
-		}
-		
-		System.out.println("Nombre variables d'écart" + nbVariablesEcart);
-	
-		
-		
-		matrice = new Matrice(nbContraintes, nbVariables, nbVariablesEcart,ihmContraintes);
+
+			
+		matrice = new Matrice(nbContraintes, nbVariables, ihmContraintes);
 		//matrice.creationMatriceNomVariable();
 		//matrice.creationMatriceNomVariableBase();
 		matrice.remplirMatrice();

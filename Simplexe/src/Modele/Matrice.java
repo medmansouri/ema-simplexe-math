@@ -16,22 +16,22 @@ public class Matrice {
 	private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
 	private InterfaceContraintes ihmContrainte;
-	private int jMaxDerniereLigne; //Numéro de colone de la valeur max
+	private int jMaxDerniereLigne; //Numï¿½ro de colone de la valeur max
 	private float pivot;  //Valeur du pivot
-	private int iPivot; //Numéro de ligne du pivot
-	private int jPivot; //Numéro de colone du pivot
+	private int iPivot; //Numï¿½ro de ligne du pivot
+	private int jPivot; //Numï¿½ro de colone du pivot
 
 	
-	public Matrice(int nbContraintes, int nbVariables,int nbVariablesEcart, InterfaceContraintes ihmContrainte) 
+	public Matrice(int nbContraintes, int nbVariables, InterfaceContraintes ihmContrainte) 
 	{
 		this.nbContraintes=nbContraintes;
 		this.nbVariables=nbVariables;
-		this.nbVariablesEcart=nbVariablesEcart;
+		this.nbVariablesEcart=nbContraintes;
 		this.ihmContrainte=ihmContrainte;
 		matrice = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
 	
-	//Remplissage de la matrice avec les valeurs des coefficients + matrice identité + matrice result + matrice fonction eco
+	//Remplissage de la matrice avec les valeurs des coefficients + matrice identitï¿½ + matrice result + matrice fonction eco
 	public void remplirMatrice()
 	{
 		int i=0;
@@ -47,7 +47,7 @@ public class Matrice {
 			}
 		}
 		
-		//On ajoute la matrice identité a la matrice des coefficients		
+		//On ajoute la matrice identitï¿½ a la matrice des coefficients		
 		float matriceIdentite[][] = new float[nbVariablesEcart][nbVariablesEcart];
 		matriceIdentite = creationMatriceIdentite();
 		for(i=0; i<matriceIdentite.length;i++)
@@ -66,7 +66,7 @@ public class Matrice {
 			matrice[i][matrice[0].length-1]=matriceResult[i];
 		}
 		
-		//Ajout de la matrice de la fonction économique
+		//Ajout de la matrice de la fonction ï¿½conomique
 		float matriceFonctionEco[] = creationMatriceFonctionEco();
 		for(i=0;i<matriceFonctionEco.length;i++)
 		{
@@ -74,7 +74,7 @@ public class Matrice {
 		}		
 	}
 
-	//Fonction pour résoudre le problème
+	//Fonction pour resoudre le probleme par la premiere methode
 	public void resolutionProbleme()
 	{
 		float max = chercheMax();
@@ -86,11 +86,11 @@ public class Matrice {
 			changementVariableBase();
 			afficheMatrice();			
 		}
-		System.out.println("Fin du problème");
+		System.out.println("Fin du probleme");
 		
 	}
 	
-	//Création de la matrice identité
+	//Crï¿½ation de la matrice identitï¿½
 	public float[][] creationMatriceIdentite()
 	{
 	    float matriceIdentite[][] = new float[nbVariablesEcart][nbVariablesEcart];
@@ -105,7 +105,7 @@ public class Matrice {
 	    		  matriceIdentite[i][j]=0;
 	      }
 	    }
-	     System.out.println("matrice identité :");
+	     System.out.println("matrice identitï¿½ :");
 	    for (int i=0; i<matriceIdentite.length ; i++)
 	    {
 	    	for (int j=0; j<matriceIdentite[0].length  ; j++)
@@ -135,7 +135,7 @@ public class Matrice {
 		return matriceResult;
 	}
 	
-	//Création de la matrice de la fonction économique
+	//Crï¿½ation de la matrice de la fonction ï¿½conomique
 	public float[] creationMatriceFonctionEco()
 	{
 		float matriceFonctionEco[] = new float[matrice[0].length];
@@ -157,7 +157,7 @@ public class Matrice {
 		return matriceFonctionEco;
 	}
 		
-	//Création nom variable valeur d'écart	
+	//Crï¿½ation nom variable valeur d'ï¿½cart	
 	public String[] creationMatriceNomVariableEcart()
 	{
 		String[] matriceNomVariableEcart = new String[nbVariablesEcart];
@@ -172,7 +172,7 @@ public class Matrice {
 		return matriceNomVariableEcart;
 	}
 	
-	//Création de la matrice avec les noms de variables
+	//Crï¿½ation de la matrice avec les noms de variables
 	public void creationMatriceNomVariable()
 	{
 		matriceNomVariable = new String[matrice[0].length-1];
@@ -184,7 +184,7 @@ public class Matrice {
 			matriceNomVariable[i]=ihmContrainte.getTabNomVariable().get(i).getText();
 		}		
 		
-		//Ajout des noms des variables d'écart
+		//Ajout des noms des variables d'ï¿½cart
 		int i=0;
 		for(int j=ihmContrainte.getTabNomVariable().size();j<matriceNomVariable.length;j++)
 		{
@@ -198,7 +198,7 @@ public class Matrice {
 		}
 	}
 	
-	//Création de la matrice avec les noms de variable appartenant à la base
+	//Crï¿½ation de la matrice avec les noms de variable appartenant ï¿½ la base
 	public void creationMatriceNomVariableBase()
 	{
 		matriceNomVariableBase = creationMatriceNomVariableEcart();
@@ -222,7 +222,7 @@ public class Matrice {
 	    }
 	}
 	
-	//Cherche le maximum sur la dernière ligne
+	//Cherche le maximum sur la derniï¿½re ligne
 	public float chercheMax()
 	{
 		float maximum = 0;		
@@ -240,7 +240,7 @@ public class Matrice {
 		return maximum;
 	}
 	
-	//Cherche le pivot
+	//Cherche le pivot 1ere methode
 	public void cherchePivot()
 	{
 		float calculPivot;
@@ -265,6 +265,21 @@ public class Matrice {
 		System.out.println("iPivot : " + iPivot);
 		System.out.println("jPivot : " + jPivot);
 	}
+
+        //Fonction qui cherche le pivot pour la deuxiÃ¨me mÃ©thode
+        public void cherchePivot2()
+        {
+            float iPivotTemp;
+            float jPivotTemp;
+
+            for (int i=0; i<matrice.length;i++)
+            {
+                for (int j=0; j<matrice[0].length;j++)
+                {
+
+                }
+            }
+        }
 	
 	//Fonction qui divise la ligne du pivot par la valeur du pivot
 	public void divisionLignePivot()
@@ -275,7 +290,7 @@ public class Matrice {
 		}
 	}
 	
-	//Fonction qui soustrait chaque ligne à la ligne du pivot multiplié par un coefficient
+	//Fonction qui soustrait chaque ligne ï¿½ la ligne du pivot multipliï¿½ par un coefficient
 	public void soustractionLigne()
 	{
 		for (int i=0;i<matrice.length;i++)
@@ -286,7 +301,7 @@ public class Matrice {
 				System.out.println("Le coefficient de soustraction est :"+coeffSoustraction);
 				for (int j=0;j<matrice[0].length;j++)
 				{
-					System.out.println("L'élement à soustraire est : " + matrice[iPivot][j]);
+					System.out.println("L'ï¿½lement ï¿½ soustraire est : " + matrice[iPivot][j]);
 					matrice[i][j]= (matrice[i][j])-(coeffSoustraction*matrice[iPivot][j]);
 				}
 			}
