@@ -271,12 +271,32 @@ public class Matrice {
         {
             float iPivotTemp;
             float jPivotTemp;
-
-            for (int i=0; i<matrice.length;i++)
+            float valeurRapport;
+            float valeurTemp;
+            float valeurMultiplie;
+            
+            
+            for (int j=0; j<matrice[0].length;j++)
             {
-                for (int j=0; j<matrice[0].length;j++)
+                if (matrice[matrice.length-1][j] > 0)
                 {
-
+                    valeurRapport = matrice[0][matrice[0].length-1] / matrice[0][j];
+                    valeurTemp = matrice[0][j];
+                    valeurMultiplie = valeurTemp*matrice[matrice.length-1][j];
+                    iPivotTemp=0;
+                    jPivotTemp=j;
+                    for (int i=1; i<matrice.length;i++)
+                    {
+                        if(matrice[i][matrice[0].length-1] / matrice[i][j] < valeurRapport)
+                        {
+                           valeurRapport = matrice[i][matrice[0].length-1] / matrice[i][j];
+                           valeurTemp = matrice[i][j];
+                           valeurMultiplie = valeurTemp*matrice[matrice.length-1][j];
+                           iPivotTemp=i;
+                           jPivotTemp=j;
+                        }
+                    }
+                    
                 }
             }
         }
