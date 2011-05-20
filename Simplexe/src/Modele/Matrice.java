@@ -186,7 +186,7 @@ public class Matrice {
 			matriceNomVariable[i]=ihmContrainte.getTabNomVariable().get(i).getText();
 		}		
 		
-		//Ajout des noms des variables d'�cart
+		//Ajout des noms des variables d'ecart
 		int i=0;
 		for(int j=ihmContrainte.getTabNomVariable().size();j<matriceNomVariable.length;j++)
 		{
@@ -194,7 +194,7 @@ public class Matrice {
 			i++;
 		}
 				
-		for(int k=0;k<matrice[0].length-1;k++)
+		for(int k=0;k<matriceDepart[0].length-1;k++)
 		{
 			System.out.println("Nom de variable : " + matriceNomVariable[k]);
 		}
@@ -333,7 +333,12 @@ public class Matrice {
 	//Fonction qui fait entrer un nom de variable dans la base
 	public void changementVariableBase()
 	{
-		matriceNomVariableBase[pivot.getLigne()]=matriceNomVariable[pivot.getColonne()];
+            System.out.println("Changement variable de base : ");
+            System.out.println("Ligne du pivot " + pivot.getLigne());
+            System.out.println("Colonne du pivot " + pivot.getColonne());
+            System.out.println("Variable de base : " + matriceNomVariableBase[pivot.getLigne()]);
+            matriceNomVariableBase[pivot.getLigne()]=matriceNomVariable[pivot.getColonne()];
+            System.out.println("Variable de base : " + matriceNomVariableBase[pivot.getLigne()]);
 	}
 
         /**
