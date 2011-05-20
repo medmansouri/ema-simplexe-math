@@ -14,9 +14,11 @@ public class elementMatrice {
     private int colonne;
     private float valeur;
 
-    public elementMatrice(int ligne, int colonne) {
+    public elementMatrice(int ligne, int colonne, float valeur)
+    {
         this.ligne = ligne;
         this.colonne = colonne;
+        this.valeur = valeur;
     }
 
     public elementMatrice() {

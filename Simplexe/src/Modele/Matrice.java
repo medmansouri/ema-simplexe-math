@@ -17,8 +17,7 @@ public class Matrice {
 	private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
 	private InterfaceContraintes ihmContrainte;
-	private int jMaxDerniereLigne; //Numero de colone de la valeur max
-        
+	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
 
 
@@ -77,7 +76,7 @@ public class Matrice {
 	}
 
 	//Fonction pour resoudre le probleme par la premiere methode
-	public void resolutionProbleme()
+	public void resolutionProblemeMethode1()
 	{
             float max = chercheMax();
             while(max>0)
@@ -85,12 +84,26 @@ public class Matrice {
 		cherchePivot();
 		soustractionLigne();
 		divisionLignePivot();
-		changementVariableBase();
+		//changementVariableBase();
 		afficheMatrice();
                 max = chercheMax();		
             }
-            System.out.println("Fin du probleme");
-		
+            System.out.println("Fin du probleme");		
+	}
+        
+        public void resolutionProblemeMethode2()
+	{
+            float max = chercheMax();
+            //while(max>0)
+            //{    
+		cherchePivot2();
+		soustractionLigne();
+		divisionLignePivot();
+		//changementVariableBase();
+		afficheMatrice();
+                max = chercheMax();		
+            //}
+            //System.out.println("Fin du probleme");		
 	}
 	
 	//Cr�ation de la matrice identit�
@@ -108,15 +121,6 @@ public class Matrice {
 	    		  matriceIdentite[i][j]=0;
 	      }
 	    }
-	     System.out.println("matrice identite :");
-	    for (int i=0; i<matriceIdentite.length ; i++)
-	    {
-	    	for (int j=0; j<matriceIdentite[0].length  ; j++)
-	    	{
-	    		System.out.print(matriceIdentite[i][j]+" ");
-	    	}
-	        System.out.println();
-	    }
 	    
 	    return matriceIdentite;
 	  }
@@ -130,15 +134,15 @@ public class Matrice {
 		{
 				matriceResult[i]=Integer.parseInt(ihmContrainte.getTabMaximisant().get(i).getText());					
 		}
-		for(int i=0;i<nbContraintes;i++)
+		/*for(int i=0;i<nbContraintes;i++)
 		{
 				System.out.println(matriceResult[i]);
-		}
+		}*/
 				
 		return matriceResult;
 	}
 	
-	//Cr�ation de la matrice de la fonction �conomique
+	//Creation de la matrice de la fonction �conomique
 	public float[] creationMatriceFonctionEco()
 	{
 		float matriceFonctionEco[] = new float[matriceDepart[0].length];
@@ -152,15 +156,10 @@ public class Matrice {
 			matriceFonctionEco[j]=0;
 		}
 		
-		for(int k=0;k<matriceFonctionEco.length;k++)
-		{
-				System.out.println(matriceFonctionEco[k]);
-		}
-		
 		return matriceFonctionEco;
 	}
 		
-	//Cr�ation nom variable valeur d'�cart	
+	//Creation nom variable valeur d'�cart	
 	public String[] creationMatriceNomVariableEcart()
 	{
 		String[] matriceNomVariableEcart = new String[nbVariablesEcart];
@@ -175,7 +174,7 @@ public class Matrice {
 		return matriceNomVariableEcart;
 	}
 	
-	//Cr�ation de la matrice avec les noms de variables
+	//Creation de la matrice avec les noms de variables
 	public void creationMatriceNomVariable()
 	{
 		matriceNomVariable = new String[matriceDepart[0].length-1];
@@ -194,22 +193,14 @@ public class Matrice {
 			matriceNomVariable[j]=matriceNomVariableEcart[i];
 			i++;
 		}
-				
-		for(int k=0;k<matriceDepart[0].length-1;k++)
-		{
-			System.out.println("Nom de variable : " + matriceNomVariable[k]);
-		}
+			
 	}
 	
-	//Cr�ation de la matrice avec les noms de variable appartenant � la base
+	//Creation de la matrice avec les noms de variable appartenant � la base
 	public void creationMatriceNomVariableBase()
 	{
 		matriceNomVariableBase = creationMatriceNomVariableEcart();
-		System.out.println("Matrice des variables de bases : ");
-		for(int k=0;k<matriceNomVariableBase.length;k++)
-		{
-			System.out.println("Nom de variable : " + matriceNomVariableBase[k]);
-		}
+
 	}
 		
 	//Fonction pour afficher la matrice
@@ -225,7 +216,7 @@ public class Matrice {
 	    }
 	}
 	
-	//Cherche le maximum sur la derni�re ligne
+	//Cherche le maximum sur la derniere ligne
 	public float chercheMax()
 	{
 		float maximum = 0;		
@@ -239,7 +230,6 @@ public class Matrice {
 				jMaxDerniereLigne=j;
 			}
 		}
-		System.out.println("La colone est : " + jMaxDerniereLigne);
 		return maximum;
 	}
 	
@@ -272,36 +262,54 @@ public class Matrice {
         //Fonction qui cherche le pivot pour la deuxième méthode
         public void cherchePivot2()
         {
-            float iPivotTemp;
-            float jPivotTemp;
-            float valeurRapport;
-            float valeurTemp;
-            float valeurMultiplie;
-            
+            elementMatrice pivotTemp = new elementMatrice();
+            float valeurRapport=9999;
+            float valeurMultiplie=9999;
+            ArrayList<elementMatrice> tabPivotTemp = new ArrayList<elementMatrice> ();
+            ArrayList<Float> tabValeurMultiple = new ArrayList<Float> ();
             
             for (int j=0; j<matrice[0].length;j++)
             {
                 if (matrice[matrice.length-1][j] > 0)
-                {
-                    valeurRapport = matrice[0][matrice[0].length-1] / matrice[0][j];
-                    valeurTemp = matrice[0][j];
-                    valeurMultiplie = valeurTemp*matrice[matrice.length-1][j];
-                    iPivotTemp=0;
-                    jPivotTemp=j;
-                    for (int i=1; i<matrice.length;i++)
+                {                                       
+                    for (int i=0; i<matrice.length-1;i++)
                     {
                         if(matrice[i][matrice[0].length-1] / matrice[i][j] < valeurRapport)
                         {
                            valeurRapport = matrice[i][matrice[0].length-1] / matrice[i][j];
-                           valeurTemp = matrice[i][j];
-                           valeurMultiplie = valeurTemp*matrice[matrice.length-1][j];
-                           iPivotTemp=i;
-                           jPivotTemp=j;
+                           pivotTemp.setValeur(matrice[i][j]);
+                           pivotTemp.setLigne(i);
+                           pivotTemp.setColonne(j);
+                           valeurMultiplie = valeurRapport*matrice[matrice.length-1][j];
+                           
                         }
                     }
                     
+                    tabPivotTemp.add(pivotTemp);            
+                    tabValeurMultiple.add(valeurMultiplie);
                 }
             }
+            
+            valeurMultiplie = tabValeurMultiple.get(0);
+            pivot.setValeur(tabPivotTemp.get(0).getValeur());
+            pivot.setLigne(tabPivotTemp.get(0).getLigne());
+            pivot.setColonne(tabPivotTemp.get(0).getColonne());
+                        
+            for(int i=1; i<tabValeurMultiple.size(); i++)
+            {
+                if(tabValeurMultiple.get(i) > valeurMultiplie)
+                {
+                    valeurMultiplie = tabValeurMultiple.get(i);
+                    pivot.setValeur(tabPivotTemp.get(i).getValeur());
+                    pivot.setLigne(tabPivotTemp.get(i).getLigne());
+                    pivot.setColonne(tabPivotTemp.get(i).getColonne());
+                }
+            }
+            
+            System.out.println("La valeur du pivot est :"+pivot.getValeur());
+            System.out.println("Ligne du pivot : "+pivot.getLigne());
+            System.out.println("Colonne du pivot : "+pivot.getColonne());
+            
         }
 	
 	//Fonction qui divise la ligne du pivot par la valeur du pivot
@@ -321,10 +329,8 @@ public class Matrice {
 			if(i!=pivot.getLigne())
 			{
 				float coeffSoustraction = (matrice[i][pivot.getColonne()])/pivot.getValeur();
-				System.out.println("Le coefficient de soustraction est :"+coeffSoustraction);
 				for (int j=0;j<matrice[0].length;j++)
 				{
-					System.out.println("L'element a soustraire est : " + matrice[pivot.getLigne()][j]);
 					matrice[i][j]= (matrice[i][j])-(coeffSoustraction*matrice[pivot.getLigne()][j]);
 				}
 			}
@@ -334,12 +340,7 @@ public class Matrice {
 	//Fonction qui fait entrer un nom de variable dans la base
 	public void changementVariableBase()
 	{
-            System.out.println("Changement variable de base : ");
-            System.out.println("Ligne du pivot " + pivot.getLigne());
-            System.out.println("Colonne du pivot " + pivot.getColonne());
-            System.out.println("Variable de base : " + matriceNomVariableBase[pivot.getLigne()]);
             matriceNomVariableBase[pivot.getLigne()]=matriceNomVariable[pivot.getColonne()];
-            System.out.println("Variable de base : " + matriceNomVariableBase[pivot.getLigne()]);
 	}
 
         /**
