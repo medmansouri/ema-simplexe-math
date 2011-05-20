@@ -92,12 +92,12 @@ public class InterfaceContraintes extends JFrame{
 
             }
 
-            this.getContentPane().add(panelNord,BorderLayout.NORTH);
-            this.getContentPane().add(panelCentre,BorderLayout.CENTER);
-            this.getContentPane().add(boutonEntrer,BorderLayout.SOUTH);
+            maFenetre.add(panelNord,BorderLayout.NORTH);
+            maFenetre.add(panelCentre,BorderLayout.CENTER);
+            maFenetre.add(boutonEntrer,BorderLayout.SOUTH);
             boutonEntrer.addActionListener(new EcouteurContraintes(this, nbContraintes, nbVariables));
-            this.pack();
-            this.setVisible(true);
+            maFenetre.pack();
+            maFenetre.setVisible(true);
         }
 
 
