@@ -12,14 +12,15 @@ public class Matrice {
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart;
+        private float[][] matriceDepart;
 	private float[][] matrice;
 	private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
 	private InterfaceContraintes ihmContrainte;
-	private int jMaxDerniereLigne; //Num�ro de colone de la valeur max
+	private int jMaxDerniereLigne; //Numero de colone de la valeur max
 	private float pivot;  //Valeur du pivot
-	private int iPivot; //Num�ro de ligne du pivot
-	private int jPivot; //Num�ro de colone du pivot
+	private int iPivot; //Numero de ligne du pivot
+	private int jPivot; //Numero de colonne du pivot
 
 	
 	public Matrice(int nbContraintes, int nbVariables, InterfaceContraintes ihmContrainte) 
@@ -28,7 +29,7 @@ public class Matrice {
 		this.nbVariables=nbVariables;
 		this.nbVariablesEcart=nbContraintes;
 		this.ihmContrainte=ihmContrainte;
-		matrice = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
+		matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
 	
 	//Remplissage de la matrice avec les valeurs des coefficients + matrice identit� + matrice result + matrice fonction eco
@@ -41,7 +42,7 @@ public class Matrice {
 			{
 				for(int k=0;k<nbVariables;k++)
 				{
-					this.matrice[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
+					this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
 					i++;
 				}
 			}
@@ -54,7 +55,7 @@ public class Matrice {
 		{
 			for(int j=0; j<matriceIdentite.length;j++)
 			{
-				matrice[i][nbVariables+j]=matriceIdentite[i][j];	
+				matriceDepart[i][nbVariables+j]=matriceIdentite[i][j];	
 				
 			}			
 		}
@@ -63,15 +64,16 @@ public class Matrice {
 		float matriceResult[] = creationMatriceMaximisant();
 		for(i=0;i<matriceResult.length;i++)
 		{
-			matrice[i][matrice[0].length-1]=matriceResult[i];
+			matriceDepart[i][matriceDepart[0].length-1]=matriceResult[i];
 		}
 		
 		//Ajout de la matrice de la fonction �conomique
 		float matriceFonctionEco[] = creationMatriceFonctionEco();
 		for(i=0;i<matriceFonctionEco.length;i++)
 		{
-			matrice[matrice.length-1][i]=matriceFonctionEco[i];
-		}		
+			matriceDepart[matriceDepart.length-1][i]=matriceFonctionEco[i];
+		}
+                this.matrice = this.matriceDepart;
 	}
 
 	//Fonction pour resoudre le probleme par la premiere methode
@@ -340,4 +342,10 @@ public class Matrice {
 	public float[][] getMatrice() {
 		return matrice;
 	}
+
+    public float[][] getMatriceDepart() {
+        return matriceDepart;
+    }
+        
+        
 }
