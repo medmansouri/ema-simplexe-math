@@ -79,16 +79,17 @@ public class Matrice {
 	//Fonction pour resoudre le probleme par la premiere methode
 	public void resolutionProbleme()
 	{
-		float max = chercheMax();
-		if(max > 0)
-		{
-			cherchePivot();
-			soustractionLigne();
-			divisionLignePivot();
-			changementVariableBase();
-			afficheMatrice();			
-		}
-		System.out.println("Fin du probleme");
+            float max = chercheMax();
+            while(max>0)
+            {    
+		cherchePivot();
+		soustractionLigne();
+		divisionLignePivot();
+		changementVariableBase();
+		afficheMatrice();
+                max = chercheMax();		
+            }
+            System.out.println("Fin du probleme");
 		
 	}
 	
