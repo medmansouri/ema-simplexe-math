@@ -14,18 +14,18 @@ public class EcouteurAccueil implements ActionListener{
 		// TODO Auto-generated constructor stub
 		this.accueil=accueil;		
 	}
-	
-	public void actionPerformed(ActionEvent e)
-	{	
-		//On récupe le nombre de contraintes et de variables saisies par l'utilisateur
+
+       public void actionPerformed(ActionEvent e)
+	{
+		//On rÃ©cupe le nombre de contraintes et de variables saisies par l'utilisateur
 		int nbContraintes=(accueil.getNumContraintes());
 		int nbVariables=(accueil.getNumVariables());
 		System.out.println("Nombre de contraintes : " + nbContraintes);
 		System.out.println("Nombre de variables : " + nbVariables);
-		//On affiche une nouvelle fenêtre, pour que l'utilisateur rentre les coefficients des variables
+		// On ferme la fenÃªtre accueil ...
+		this.accueil.closeAccueil();
+		//On affiche une nouvelle fenÃªtre, pour que l'utilisateur rentre les coefficients des variables
 		contraintes = new InterfaceContraintes(nbContraintes, nbVariables);
-				
-		
-	}
 
+	}
 }
