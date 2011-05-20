@@ -17,7 +17,7 @@ import java.awt.TextArea;
  */
 public class InterfaceIteration extends JFrame{
 	private static final String TITRE = "Tableaux des iterations";
-	private static final int W=750, H=600;
+	private static final int W=753, H=600;
 	private static final int X=200, Y=120;
         public ArrayList<elementMatrice> pivotIterations = new ArrayList<elementMatrice> ();
         public ArrayList<float[][]> matriceCentreIterations = new ArrayList<float[][]> ();

@@ -30,7 +30,7 @@ public class EcouteurContraintes implements ActionListener{
 		// matrice.creationMatriceNomVariable();
 		// matrice.remplirMatrice();
 		// matrice.afficheMatrice();
-		matrice.resolutionProbleme();
+		// matrice.resolutionProbleme();
 		this.ihmContraintes.closeContrainte();
 		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
 		iteration = new InterfaceIteration(matrice);
