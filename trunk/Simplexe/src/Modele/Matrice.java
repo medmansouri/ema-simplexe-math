@@ -333,4 +333,11 @@ public class Matrice {
 	{
 		matriceNomVariableBase[iPivot]=matriceNomVariable[jPivot];
 	}
+
+        /**
+	 * Getteur matrice
+	 */
+	public float[][] getMatrice() {
+		return matrice;
+	}
 }
