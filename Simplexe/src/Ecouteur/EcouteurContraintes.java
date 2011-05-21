@@ -27,17 +27,19 @@ public class EcouteurContraintes implements ActionListener{
 	public void actionPerformed(ActionEvent e)
 	{
 		matrice = new Matrice(nbContraintes, nbVariables, ihmContraintes);
+		matrice.creationMatriceNomVariable();
+		matrice.creationMatriceNomVariableBase();
+                matrice.remplirMatrice();
 
-		//matrice.creationMatriceNomVariable();
-		//matrice.creationMatriceNomVariableBase();		
-                //matrice.creationMatriceNomVariable();
-		matrice.remplirMatrice();
-		matrice.afficheMatrice();
-                //matrice.cherchePivot2();
-                //matrice.resolutionProblemeMethode1();
-		matrice.resolutionProblemeMethode2();
-                
-
+                if(e.getSource()== ihmContraintes.getBoutonMethode1())
+                {
+                    matrice.resolutionProblemeMethode1();
+                }
+                else if(e.getSource() == ihmContraintes.getBoutonMethode2())
+                {
+                    matrice.resolutionProblemeMethode2();
+                }                           
+		                
 		this.ihmContraintes.closeContrainte();
 		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
 		iteration = new InterfaceIteration(matrice);
