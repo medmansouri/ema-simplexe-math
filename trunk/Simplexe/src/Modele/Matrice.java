@@ -41,8 +41,8 @@ public class Matrice {
 			{
 				for(int k=0;k<nbVariables;k++)
 				{
-
-                                    this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
+                                    this.matriceDepart[j][k]=(float) ((Number)ihmContrainte.getTabVariables().get(i).getValue()).doubleValue();
+                                    //this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
                                     i++;
 				}
 			}
