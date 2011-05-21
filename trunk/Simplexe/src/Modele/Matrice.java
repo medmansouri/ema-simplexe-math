@@ -41,8 +41,9 @@ public class Matrice {
 			{
 				for(int k=0;k<nbVariables;k++)
 				{
-					this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
-					i++;
+
+                                    this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
+                                    i++;
 				}
 			}
 		}
@@ -94,16 +95,16 @@ public class Matrice {
         public void resolutionProblemeMethode2()
 	{
             float max = chercheMax();
-            //while(max>0)
-            //{    
+            while(max>0)
+            {    
 		cherchePivot2();
 		soustractionLigne();
 		divisionLignePivot();
 		//changementVariableBase();
 		afficheMatrice();
                 max = chercheMax();		
-            //}
-            //System.out.println("Fin du probleme");		
+            }
+            System.out.println("Fin du probleme");		
 	}
 	
 	//Cr�ation de la matrice identit�
@@ -262,7 +263,7 @@ public class Matrice {
         //Fonction qui cherche le pivot pour la deuxième méthode
         public void cherchePivot2()
         {
-            elementMatrice pivotTemp = new elementMatrice();
+            elementMatrice pivotTemp = null;
             float valeurRapport=9999;
             float valeurMultiplie=9999;
             ArrayList<elementMatrice> tabPivotTemp = new ArrayList<elementMatrice> ();
@@ -270,6 +271,7 @@ public class Matrice {
             
             for (int j=0; j<matrice[0].length;j++)
             {
+                valeurRapport = 9999;
                 if (matrice[matrice.length-1][j] > 0)
                 {                                       
                     for (int i=0; i<matrice.length-1;i++)
@@ -277,14 +279,13 @@ public class Matrice {
                         if(matrice[i][matrice[0].length-1] / matrice[i][j] < valeurRapport)
                         {
                            valeurRapport = matrice[i][matrice[0].length-1] / matrice[i][j];
+                           pivotTemp = new elementMatrice();
                            pivotTemp.setValeur(matrice[i][j]);
                            pivotTemp.setLigne(i);
                            pivotTemp.setColonne(j);
-                           valeurMultiplie = valeurRapport*matrice[matrice.length-1][j];
-                           
+                           valeurMultiplie = valeurRapport*matrice[matrice.length-1][j];                         
                         }
-                    }
-                    
+                    }                  
                     tabPivotTemp.add(pivotTemp);            
                     tabValeurMultiple.add(valeurMultiplie);
                 }
