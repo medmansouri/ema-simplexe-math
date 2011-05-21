@@ -30,7 +30,38 @@ public class Matrice {
 		this.ihmContrainte=ihmContrainte;
 		matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
-	
+
+        	//Fonction pour resoudre le probleme par la premiere methode
+	public void resolutionProblemeMethode1()
+	{
+            float max = chercheMax();
+            while(max>0)
+            {
+		cherchePivot();
+		soustractionLigne();
+		divisionLignePivot();
+		changementVariableBase();
+		//afficheMatrice();
+                max = chercheMax();
+            }
+            System.out.println("Fin du probleme");
+	}
+
+        public void resolutionProblemeMethode2()
+	{
+            float max = chercheMax();
+            while(max>0)
+            {
+		cherchePivot2();
+		soustractionLigne();
+		divisionLignePivot();
+		changementVariableBase();
+		//afficheMatrice();
+                max = chercheMax();
+            }
+            System.out.println("Fin du probleme");
+	}
+
 	//Remplissage de la matrice avec les valeurs des coefficients + matrice identite + matrice result + matrice fonction eco
 	public void remplirMatrice()
 	{
@@ -76,36 +107,7 @@ public class Matrice {
                 this.matrice = this.matriceDepart;
 	}
 
-	//Fonction pour resoudre le probleme par la premiere methode
-	public void resolutionProblemeMethode1()
-	{
-            float max = chercheMax();
-            while(max>0)
-            {    
-		cherchePivot();
-		soustractionLigne();
-		divisionLignePivot();
-		changementVariableBase();
-		//afficheMatrice();
-                max = chercheMax();		
-            }
-            System.out.println("Fin du probleme");		
-	}
-        
-        public void resolutionProblemeMethode2()
-	{
-            float max = chercheMax();
-            while(max>0)
-            {    
-		cherchePivot2();
-		soustractionLigne();
-		divisionLignePivot();
-		changementVariableBase();
-		//afficheMatrice();
-                max = chercheMax();		
-            }
-            System.out.println("Fin du probleme");		
-	}
+
 	
 	//Creation de la matrice identite
 	public float[][] creationMatriceIdentite()
