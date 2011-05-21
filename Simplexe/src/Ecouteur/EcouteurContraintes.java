@@ -30,7 +30,8 @@ public class EcouteurContraintes implements ActionListener{
 		matrice.creationMatriceNomVariable();
 		matrice.creationMatriceNomVariableBase();
                 matrice.remplirMatrice();
-
+                matrice.afficheMatrice();
+                
                 if(e.getSource()== ihmContraintes.getBoutonMethode1())
                 {
                     matrice.resolutionProblemeMethode1();

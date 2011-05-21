@@ -2,10 +2,9 @@ package Modele;
 
 import java.util.ArrayList;
 
-import javax.swing.JTextField;
-import javax.swing.JViewport;
 
 import Interface.InterfaceContraintes;
+
 
 public class Matrice {
 	
@@ -19,6 +18,7 @@ public class Matrice {
 	private InterfaceContraintes ihmContrainte;
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
+   
 
 
 	
@@ -35,16 +35,18 @@ public class Matrice {
 	public void resolutionProblemeMethode1()
 	{
             float max = chercheMax();
+            
             while(max>0)
             {
+
 		cherchePivot();
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-		//afficheMatrice();
+  		//afficheMatrice();
                 max = chercheMax();
             }
-            System.out.println("Fin du probleme");
+             System.out.println("Fin du probleme");
 	}
 
         public void resolutionProblemeMethode2()
@@ -56,7 +58,7 @@ public class Matrice {
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-		//afficheMatrice();
+		afficheMatrice();
                 max = chercheMax();
             }
             System.out.println("Fin du probleme");
@@ -343,6 +345,8 @@ public class Matrice {
     public float[][] getMatriceDepart() {
         return matriceDepart;
     }
-        
+
+
+    
         
 }
