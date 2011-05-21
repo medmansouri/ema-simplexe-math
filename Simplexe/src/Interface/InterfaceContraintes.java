@@ -9,16 +9,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.text.NumberFormat;
 
 import Ecouteur.EcouteurAccueil;
 import Ecouteur.EcouteurContraintes;
+
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class InterfaceContraintes extends JFrame{
 
 	private int nbContraintes;
 	private int nbVariables;
-	private ArrayList<JTextField> tabVariables;
+	//private ArrayList<JTextField> tabVariables;
+        private ArrayList<JFormattedTextField> tabVariables;
         private ArrayList<JTextField> tabMaximisant;
 	private ArrayList<JTextField> tabResult;
 	private ArrayList<JTextField> tabFonctionEco;
@@ -37,7 +41,8 @@ public class InterfaceContraintes extends JFrame{
 
         private void constructionAffichage()
         {
-            tabVariables = new ArrayList<JTextField>();
+            //tabVariables = new ArrayList<JTextField>();
+            tabVariables = new ArrayList<JFormattedTextField>();
             tabMaximisant = new ArrayList<JTextField>();
             tabFonctionEco = new ArrayList<JTextField>();
             tabNomVariable = new ArrayList<JLabel>();
@@ -65,7 +70,8 @@ public class InterfaceContraintes extends JFrame{
             JPanel panelCentre = new JPanel();
             panelCentre.setLayout((new GridLayout(nbContraintes,nbVariables+2)));
             JLabel variables;
-            JTextField valeurVariables;
+            //JTextField valeurVariables;
+            JFormattedTextField valeurVariables;
             JTextField result;
             JComboBox signe;
 
@@ -75,7 +81,8 @@ public class InterfaceContraintes extends JFrame{
                 for(int j=0;j<nbVariables;j++)
                 {
                     variables = new JLabel("X"+j);
-                    valeurVariables = new JTextField();
+                    //valeurVariables = new JTextField();
+                    valeurVariables = new JFormattedTextField(NumberFormat.getNumberInstance());
                     tabVariables.add(valeurVariables);
                     panelCentre.add(valeurVariables);
                     panelCentre.add(variables);
@@ -106,7 +113,7 @@ public class InterfaceContraintes extends JFrame{
 		maFenetre.setVisible(false);
 	}
 
-	public ArrayList<JTextField> getTabVariables()
+	public ArrayList<JFormattedTextField> getTabVariables()
 	{
 		return tabVariables;
 	}

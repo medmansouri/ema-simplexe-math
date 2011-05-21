@@ -34,8 +34,8 @@ public class EcouteurContraintes implements ActionListener{
 		matrice.remplirMatrice();
 		matrice.afficheMatrice();
                 //matrice.cherchePivot2();
-                matrice.resolutionProblemeMethode1();
-		//matrice.resolutionProblemeMethode2();
+                //matrice.resolutionProblemeMethode1();
+		matrice.resolutionProblemeMethode2();
                 
 
 		this.ihmContraintes.closeContrainte();
