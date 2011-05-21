@@ -29,7 +29,8 @@ public class InterfaceContraintes extends JFrame{
 	private ArrayList<JLabel> tabNomVariable;
         private ArrayList<JComboBox> tabSigne;
 
-	private JButton boutonEntrer=new JButton("Entrer");
+	private JButton boutonMethode1=new JButton("Résolution 1ere Methode");
+        private JButton boutonMethode2=new JButton("Résolution 2ème Methode");
 	public JFrame maFenetre=new JFrame("Simplexe - TOMIO & NAVARRO");
 
 	public InterfaceContraintes(int nbContraintes, int nbVariables)
@@ -99,10 +100,18 @@ public class InterfaceContraintes extends JFrame{
 
             }
 
+            //panel sud
+            JPanel panelSud = new JPanel();
+            panelSud.setLayout((new GridLayout(1,2)));
+            panelSud.add(boutonMethode1);
+            panelSud.add(boutonMethode2);
+
             maFenetre.add(panelNord,BorderLayout.NORTH);
             maFenetre.add(panelCentre,BorderLayout.CENTER);
-            maFenetre.add(boutonEntrer,BorderLayout.SOUTH);
-            boutonEntrer.addActionListener(new EcouteurContraintes(this, nbContraintes, nbVariables));
+            maFenetre.add(panelSud,BorderLayout.SOUTH);
+         
+            boutonMethode1.addActionListener(new EcouteurContraintes(this, nbContraintes, nbVariables));
+            boutonMethode2.addActionListener(new EcouteurContraintes(this, nbContraintes, nbVariables));
             maFenetre.pack();
             maFenetre.setVisible(true);
         }
@@ -142,4 +151,14 @@ public class InterfaceContraintes extends JFrame{
 	{
 		return tabSigne;
 	}
+
+    public JButton getBoutonMethode1() {
+        return boutonMethode1;
+    }
+
+    public JButton getBoutonMethode2() {
+        return boutonMethode2;
+    }
+
+        
 }

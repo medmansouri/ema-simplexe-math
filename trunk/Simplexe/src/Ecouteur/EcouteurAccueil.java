@@ -20,8 +20,6 @@ public class EcouteurAccueil implements ActionListener{
 		//On récupe le nombre de contraintes et de variables saisies par l'utilisateur
 		int nbContraintes=(accueil.getNumContraintes());
 		int nbVariables=(accueil.getNumVariables());
-		System.out.println("Nombre de contraintes : " + nbContraintes);
-		System.out.println("Nombre de variables : " + nbVariables);
 		// On ferme la fenêtre accueil ...
 		this.accueil.closeAccueil();
 		//On affiche une nouvelle fenêtre, pour que l'utilisateur rentre les coefficients des variables

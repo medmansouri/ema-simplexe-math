@@ -31,7 +31,7 @@ public class Matrice {
 		matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
 	
-	//Remplissage de la matrice avec les valeurs des coefficients + matrice identit� + matrice result + matrice fonction eco
+	//Remplissage de la matrice avec les valeurs des coefficients + matrice identite + matrice result + matrice fonction eco
 	public void remplirMatrice()
 	{
 		int i=0;
@@ -48,7 +48,7 @@ public class Matrice {
 			}
 		}
 		
-		//On ajoute la matrice identit� a la matrice des coefficients		
+		//On ajoute la matrice identite a la matrice des coefficients
 		float matriceIdentite[][] = new float[nbVariablesEcart][nbVariablesEcart];
 		matriceIdentite = creationMatriceIdentite();
 		for(i=0; i<matriceIdentite.length;i++)
@@ -85,8 +85,8 @@ public class Matrice {
 		cherchePivot();
 		soustractionLigne();
 		divisionLignePivot();
-		//changementVariableBase();
-		afficheMatrice();
+		changementVariableBase();
+		//afficheMatrice();
                 max = chercheMax();		
             }
             System.out.println("Fin du probleme");		
@@ -100,14 +100,14 @@ public class Matrice {
 		cherchePivot2();
 		soustractionLigne();
 		divisionLignePivot();
-		//changementVariableBase();
-		afficheMatrice();
+		changementVariableBase();
+		//afficheMatrice();
                 max = chercheMax();		
             }
             System.out.println("Fin du probleme");		
 	}
 	
-	//Cr�ation de la matrice identit�
+	//Creation de la matrice identite
 	public float[][] creationMatriceIdentite()
 	{
 	    float matriceIdentite[][] = new float[nbVariablesEcart][nbVariablesEcart];
@@ -135,11 +135,7 @@ public class Matrice {
 		{
 				matriceResult[i]=Integer.parseInt(ihmContrainte.getTabMaximisant().get(i).getText());					
 		}
-		/*for(int i=0;i<nbContraintes;i++)
-		{
-				System.out.println(matriceResult[i]);
-		}*/
-				
+		
 		return matriceResult;
 	}
 	
@@ -246,8 +242,7 @@ public class Matrice {
 		for (int i=1;i<matrice.length-1;i++)
 		{
 			calcul= (float)(matrice[i][matrice[0].length-1])/(matrice[i][jMaxDerniereLigne]);
-			System.out.println("Calcul :" + calcul);
-			if(calcul<calculPivot)
+                        if(calcul<calculPivot)
 			{
 				calculPivot=calcul;
 				pivot.setValeur(matrice[i][jMaxDerniereLigne]);
@@ -255,9 +250,6 @@ public class Matrice {
 				pivot.setColonne(jMaxDerniereLigne);
 			}
 		}
-		System.out.println("Pivot : " + pivot.getValeur());
-		System.out.println("iPivot : " + pivot.getLigne());
-		System.out.println("jPivot : " + pivot.getColonne());
 	}
 
         //Fonction qui cherche le pivot pour la deuxième méthode
@@ -305,12 +297,7 @@ public class Matrice {
                     pivot.setLigne(tabPivotTemp.get(i).getLigne());
                     pivot.setColonne(tabPivotTemp.get(i).getColonne());
                 }
-            }
-            
-            System.out.println("La valeur du pivot est :"+pivot.getValeur());
-            System.out.println("Ligne du pivot : "+pivot.getLigne());
-            System.out.println("Colonne du pivot : "+pivot.getColonne());
-            
+            }           
         }
 	
 	//Fonction qui divise la ligne du pivot par la valeur du pivot
