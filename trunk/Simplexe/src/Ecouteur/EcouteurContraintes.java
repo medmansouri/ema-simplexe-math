@@ -47,6 +47,7 @@ public class EcouteurContraintes implements ActionListener{
 		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
 		//iteration = new InterfaceIteration(matrice);
                 ihmTableau = new InterfaceTableau(matrice);
+                //ihmTableau.getAffichage().setText(matrice.toString());
 	}
 
     

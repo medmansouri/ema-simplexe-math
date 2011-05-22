@@ -12,6 +12,7 @@ import Ecouteur.*;
 import Modele.Matrice;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ public class InterfaceTableau extends JFrame{
 
         private Matrice matrice;
 	private JButton boutonSuite=new JButton("Iteration suivante");
+        private JButton boutonNouveau = new JButton("Nouveau problème");
    	public JFrame maFenetre=new JFrame("Simplexe - TOMIO & NAVARRO");
         private JTextArea affichage;
        
@@ -70,12 +72,22 @@ public class InterfaceTableau extends JFrame{
             panelCentre.add(maJTable);
             
             //panel sud
-            JPanel panelSud = new JPanel();            
+            JPanel panelSud = new JPanel();
+            panelSud.setLayout((new GridLayout(1,3)));
             panelSud.add(boutonSuite);
-
+            panelSud.add(boutonNouveau);
+            
             //Panel est
             JPanel panelEst = new JPanel();
-            affichage=new JTextArea(matrice.toString());
+            if(matrice.chercheMax() > 0)
+            {
+                affichage=new JTextArea(matrice.toString());
+            }
+            else
+            {
+                affichage = new JTextArea(matrice.toStringFin());
+                boutonSuite.setVisible(false);
+            }
             affichage.setPreferredSize(new Dimension(300,250));
             panelEst.add(affichage);
             
@@ -100,6 +112,18 @@ public class InterfaceTableau extends JFrame{
         {
             JOptionPane.showMessageDialog(this, "Plus d'itération possible");
         }
+
+    public JTextArea getAffichage() {
+        return affichage;
+    }
+
+    public JButton getBoutonNouveau() {
+        return boutonNouveau;
+    }
+
+    
+
+        
 
 
 

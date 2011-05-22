@@ -1,5 +1,6 @@
 package Ecouteur;
 
+import Interface.InterfaceAccueil;
 import Interface.InterfaceContraintes;
 
 import Interface.InterfaceTableau;
@@ -11,6 +12,7 @@ public class EcouteurTableau implements ActionListener{
 
         private Matrice matrice;
       private InterfaceTableau ihmTableau;
+      private InterfaceAccueil ihmAccueil;
            
 
 
@@ -24,27 +26,35 @@ public class EcouteurTableau implements ActionListener{
 
 	public void actionPerformed(ActionEvent e)
 	{
-            float max = matrice.chercheMax();
-            if (max > 0)
+            if (e.getSource() == ihmTableau.getBoutonNouveau())
             {
-                if (matrice.getNumMethode() == 1)
-                {
-                    matrice.resolutionProblemeMethode1();
-                } 
-                else if (matrice.getNumMethode() == 2)
-                {
-                    matrice.resolutionProblemeMethode2();
-                }
                 this.ihmTableau.closeTableau();
-		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
-		//iteration = new InterfaceIteration(matrice);
-                ihmTableau = new InterfaceTableau(matrice);
-            }
+                ihmAccueil = new InterfaceAccueil();
+            } 
             else
             {
-                ihmTableau.affichePopUp();
-            }
-           
+                float max = matrice.chercheMax();
+                if (max > 0)
+                {
+
+                    if (matrice.getNumMethode() == 1)
+                    {
+
+                        matrice.resolutionProblemeMethode1();
+                    }
+                    else if (matrice.getNumMethode() == 2) {
+                        matrice.resolutionProblemeMethode2();
+                    }
+                     this.ihmTableau.closeTableau();
+                    
+                    ihmTableau = new InterfaceTableau(matrice);              
+
+
+                } else
+                {
+                    ihmTableau.affichePopUp();
+                }
+            }           
 	
 	}
 }
