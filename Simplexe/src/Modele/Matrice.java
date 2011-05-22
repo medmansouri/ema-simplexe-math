@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import Interface.InterfaceContraintes;
+import Interface.InterfaceTableau;
 
 
 public class Matrice {
@@ -18,7 +19,8 @@ public class Matrice {
 	private InterfaceContraintes ihmContrainte;
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
-   
+        private int numMethode;
+        private InterfaceTableau ihmTableau;
 
 
 	
@@ -65,14 +67,13 @@ public class Matrice {
         public void resolutionProblemeMethode2()
 	{
             float max = chercheMax();
-            while(max>0)
+            if(max>0)
             {
 		cherchePivot2();
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-		afficheMatrice();
-                max = chercheMax();
+		afficheMatrice();               
             }
             System.out.println("Fin du probleme");
 	}
@@ -373,6 +374,21 @@ public class Matrice {
     public String[] getMatriceNomVariableBase() {
         return matriceNomVariableBase;
     }
+
+    public int getNumMethode() {
+        return numMethode;
+    }
+
+    /**
+	 * Setter matrice
+	 */
+
+    public void setNumMethode(int numMethode) {
+        this.numMethode = numMethode;
+    }
+
+        
+    
 
     
 

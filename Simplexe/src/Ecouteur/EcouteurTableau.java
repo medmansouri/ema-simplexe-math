@@ -10,33 +10,41 @@ import java.awt.event.ActionListener;
 public class EcouteurTableau implements ActionListener{
 
         private Matrice matrice;
-        private InterfaceContraintes ihmContraintes;
-        private InterfaceTableau ihmTableau;
+      private InterfaceTableau ihmTableau;
+            private EcouteurContraintes ecouteurContraintes;
 
 
-	public EcouteurTableau(InterfaceTableau ihmTableau, Matrice matrice, InterfaceContraintes ihmContraintes)
+	public EcouteurTableau(InterfaceTableau ihmTableau, Matrice matrice, EcouteurContraintes ecouteurContraintes)
 	{
             this.ihmTableau = ihmTableau;
             this.matrice = matrice;
-            this.ihmContraintes = ihmContraintes;
+            this.ecouteurContraintes = ecouteurContraintes;
+            
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
-               if(e.getSource()== ihmContraintes.getBoutonMethode1())
+            float max = matrice.chercheMax();
+            if (max > 0)
+            {
+                if (matrice.getNumMethode() == 1)
                 {
-                    System.out.println("Resolution probleme 1");
                     matrice.resolutionProblemeMethode1();
-                }
-                else if(e.getSource() == ihmContraintes.getBoutonMethode2())
+                } 
+                else if (matrice.getNumMethode() == 2)
                 {
                     matrice.resolutionProblemeMethode2();
                 }
-	
-
-		this.ihmContraintes.closeContrainte();
+                this.ihmTableau.closeTableau();
 		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
 		//iteration = new InterfaceIteration(matrice);
                 ihmTableau = new InterfaceTableau(matrice);
+            }
+            else
+            {
+                ihmTableau.affichePopUp();
+            }
+           
+	
 	}
 }
