@@ -5,13 +5,15 @@ import java.awt.event.ActionListener;
 
 import Interface.InterfaceAccueil;
 import Interface.InterfaceContraintes;
-import Interface.InterfaceIteration;
+
+import Interface.InterfaceTableau;
 import Modele.Matrice;
 
 public class EcouteurContraintes implements ActionListener{
 
 	public InterfaceContraintes ihmContraintes;
-        private InterfaceIteration iteration;
+
+        private InterfaceTableau ihmTableau;
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart=0;
@@ -30,20 +32,13 @@ public class EcouteurContraintes implements ActionListener{
 		matrice.creationMatriceNomVariable();
 		matrice.creationMatriceNomVariableBase();
                 matrice.remplirMatrice();
-                matrice.afficheMatrice();
+                //matrice.afficheMatrice();
                 
-                if(e.getSource()== ihmContraintes.getBoutonMethode1())
-                {
-                    System.out.println("Resolution probleme 1");
-                    matrice.resolutionProblemeMethode1();
-                }
-                else if(e.getSource() == ihmContraintes.getBoutonMethode2())
-                {
-                    matrice.resolutionProblemeMethode2();
-                }                           
+                         
 		                
 		this.ihmContraintes.closeContrainte();
 		//On affiche une nouvelle fenêtre, où l'utilisateur voient les iterations du problème
-		iteration = new InterfaceIteration(matrice);
+		//iteration = new InterfaceIteration(matrice);
+                ihmTableau = new InterfaceTableau(matrice, ihmContraintes);
 	}
 }

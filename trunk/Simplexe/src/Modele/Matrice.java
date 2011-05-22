@@ -31,8 +31,8 @@ public class Matrice {
 		matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
 
-        	//Fonction pour resoudre le probleme par la premiere methode
-	public void resolutionProblemeMethode1()
+        //Fonction pour resoudre le probleme par la premiere methode
+	/*public void resolutionProblemeMethode1()
 	{
             float max = chercheMax();
             
@@ -41,10 +41,24 @@ public class Matrice {
 		cherchePivot();
 		soustractionLigne();
 		divisionLignePivot();
-		changementVariableBase();
-  		afficheMatrice();
+		//changementVariableBase();
+  		//afficheMatrice();
                 max = chercheMax();
             }
+             System.out.println("Fin du probleme");
+	}*/
+        public void resolutionProblemeMethode1()
+	{
+            float max = chercheMax();
+
+            if(max>0)
+            {
+		cherchePivot();
+		soustractionLigne();
+		divisionLignePivot();
+		changementVariableBase();
+  		//afficheMatrice();
+             }
              System.out.println("Fin du probleme");
 	}
 
@@ -193,6 +207,11 @@ public class Matrice {
 			matriceNomVariable[j]=matriceNomVariableEcart[i];
 			i++;
 		}
+
+                for(int k=0;k<matriceNomVariable.length;k++)
+		{
+                    System.out.println(matriceNomVariable[k]);
+		}
 			
 	}
 	
@@ -241,10 +260,6 @@ public class Matrice {
 		float calcul;
                 calculPivot = 9999;
                 elementMatrice pivotTemp = null;
-                //calculPivot = (float)(matrice[0][matrice[0].length-1])/(matrice[0][jMaxDerniereLigne]);
-		//pivot.setValeur(matrice[0][jMaxDerniereLigne]);
-                //pivot.setLigne(0);
-		//pivot.setColonne(jMaxDerniereLigne);
 		for (int i=0;i<matrice.length-1;i++)
 		{
 			calcul= (float)(matrice[i][matrice[0].length-1])/(matrice[i][jMaxDerniereLigne]);
@@ -255,9 +270,6 @@ public class Matrice {
                                 pivotTemp.setColonne(jMaxDerniereLigne);
                                 pivotTemp.setLigne(i);
                                 pivotTemp.setValeur(matrice[i][jMaxDerniereLigne]);
-                                //pivot.setValeur(matrice[i][jMaxDerniereLigne]);
-				//pivot.setLigne(i);
-				//pivot.setColonne(jMaxDerniereLigne);
 			}
 		}
                 this.pivot = pivotTemp;
@@ -354,6 +366,15 @@ public class Matrice {
         return matriceDepart;
     }
 
+    public String[] getMatriceNomVariable() {
+        return matriceNomVariable;
+    }
+
+    public String[] getMatriceNomVariableBase() {
+        return matriceNomVariableBase;
+    }
+
+    
 
     
         
