@@ -58,7 +58,7 @@ public class Matrice {
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-		afficheMatrice();               
+		nbIteration++;
             }
             System.out.println("Fin du probleme");
 	}
@@ -390,6 +390,19 @@ public class Matrice {
             resultat = pivot()+"\n"+variableBase()+"\n"+valeurMaxi(); 
             return resultat;
         }
+
+        //Affiche caractéristique matrice fin
+        public String toStringFin()
+        {
+            String resultat;
+
+            resultat = "Il n'y a plus d'itération possible. Le programme est fini"
+                    + "\n" + " Nombre d'itérations effectuées : " + getNbIteration()
+                    + "\n" + valeurMaxi();
+
+            return resultat;
+        }
+
 
         /**
 	 * Getteur matrice
