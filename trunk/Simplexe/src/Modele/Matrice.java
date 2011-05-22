@@ -38,12 +38,11 @@ public class Matrice {
             
             while(max>0)
             {
-
 		cherchePivot();
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-  		//afficheMatrice();
+  		afficheMatrice();
                 max = chercheMax();
             }
              System.out.println("Fin du probleme");
@@ -231,6 +230,7 @@ public class Matrice {
 				jMaxDerniereLigne=j;
 			}
 		}
+                System.out.println("Le maximum est : " + maximum);
 		return maximum;
 	}
 	
@@ -239,21 +239,28 @@ public class Matrice {
 	{
 		float calculPivot;
 		float calcul;
-		calculPivot = (float)(matrice[0][matrice[0].length-1])/(matrice[0][jMaxDerniereLigne]);
-		pivot.setValeur(matrice[0][jMaxDerniereLigne]);
-                pivot.setLigne(0);
-		pivot.setColonne(jMaxDerniereLigne);
-		for (int i=1;i<matrice.length-1;i++)
+                calculPivot = 9999;
+                elementMatrice pivotTemp = null;
+                //calculPivot = (float)(matrice[0][matrice[0].length-1])/(matrice[0][jMaxDerniereLigne]);
+		//pivot.setValeur(matrice[0][jMaxDerniereLigne]);
+                //pivot.setLigne(0);
+		//pivot.setColonne(jMaxDerniereLigne);
+		for (int i=0;i<matrice.length-1;i++)
 		{
 			calcul= (float)(matrice[i][matrice[0].length-1])/(matrice[i][jMaxDerniereLigne]);
-                        if(calcul<calculPivot)
+                        if(calcul<calculPivot && calcul > 0)
 			{
 				calculPivot=calcul;
-				pivot.setValeur(matrice[i][jMaxDerniereLigne]);
-				pivot.setLigne(i);
-				pivot.setColonne(jMaxDerniereLigne);
+				pivotTemp = new elementMatrice();
+                                pivotTemp.setColonne(jMaxDerniereLigne);
+                                pivotTemp.setLigne(i);
+                                pivotTemp.setValeur(matrice[i][jMaxDerniereLigne]);
+                                //pivot.setValeur(matrice[i][jMaxDerniereLigne]);
+				//pivot.setLigne(i);
+				//pivot.setColonne(jMaxDerniereLigne);
 			}
 		}
+                this.pivot = pivotTemp;
 	}
 
         //Fonction qui cherche le pivot pour la deuxième méthode
@@ -327,6 +334,7 @@ public class Matrice {
 				}
 			}
 		}
+                System.out.println("La valeur est : " + matrice[matrice.length-1][matrice[0].length-1]);
 	}
 	
 	//Fonction qui fait entrer un nom de variable dans la base
