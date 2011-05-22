@@ -34,6 +34,7 @@ public class EcouteurContraintes implements ActionListener{
                 
                 if(e.getSource()== ihmContraintes.getBoutonMethode1())
                 {
+                    System.out.println("Resolution probleme 1");
                     matrice.resolutionProblemeMethode1();
                 }
                 else if(e.getSource() == ihmContraintes.getBoutonMethode2())
