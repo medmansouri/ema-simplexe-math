@@ -16,6 +16,7 @@ import Modele.Matrice;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -26,13 +27,14 @@ public class InterfaceTableau extends JFrame{
         private Matrice matrice;
 	private JButton boutonSuite=new JButton("Iteration suivante");
    	public JFrame maFenetre=new JFrame("Simplexe - TOMIO & NAVARRO");
-        private InterfaceContraintes ihmContraintes;
+        private EcouteurContraintes ecouteurContraintes;
+       
 
-	public InterfaceTableau(Matrice matrice, InterfaceContraintes ihmContraintes)
+	public InterfaceTableau(Matrice matrice, EcouteurContraintes ecouteurContraintes)
 	{
                 this.matrice = matrice;
-                this.ihmContraintes = ihmContraintes;
-		constructionAffichage();
+                this.ecouteurContraintes = ecouteurContraintes;
+                constructionAffichage();
 	}
 
         public InterfaceTableau(Matrice matrice)
@@ -56,17 +58,6 @@ public class InterfaceTableau extends JFrame{
                 nomVariable = new JLabel(matrice.getMatriceNomVariable()[k]);
                 panelNord.add(nomVariable);
             }
-
-            //Pannel Ouest
-            /*JPanel panelOuest = new JPanel();
-            JLabel nomVariableBase;
-            panelNord.setLayout(new GridLayout(matrice.getMatriceNomVariableBase().length, 1));
-
-            for(int k=0;k<matrice.getMatriceNomVariableBase().length;k++)
-            {
-                nomVariableBase = new JLabel(matrice.getMatriceNomVariableBase()[k]);
-                panelOuest.add(nomVariableBase);
-            }*/
             
             //Pannel centre
             JTable maJTable = new JTable();
@@ -106,7 +97,7 @@ public class InterfaceTableau extends JFrame{
             maFenetre.add(panelCentre,BorderLayout.CENTER);
             maFenetre.add(panelSud,BorderLayout.SOUTH);
           
-            boutonSuite.addActionListener(new EcouteurTableau(this, matrice, ihmContraintes));
+            boutonSuite.addActionListener(new EcouteurTableau(this, matrice, ecouteurContraintes));
             //boutonMethode2.addActionListener(new EcouteurContraintes(this, nbContraintes, nbVariables));
             maFenetre.pack();
             maFenetre.setVisible(true);
@@ -117,6 +108,14 @@ public class InterfaceTableau extends JFrame{
 	{
 		maFenetre.setVisible(false);
 	}
+
+        public void affichePopUp()
+        {
+            JOptionPane.showMessageDialog(this, "Plus d'itération possible");
+        }
+
+
+
 
 
 
