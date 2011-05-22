@@ -20,7 +20,7 @@ public class Matrice {
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
         private int numMethode;
-        private InterfaceTableau ihmTableau;
+        private int nbIteration=0;
 
 
 	
@@ -34,22 +34,7 @@ public class Matrice {
 	}
 
         //Fonction pour resoudre le probleme par la premiere methode
-	/*public void resolutionProblemeMethode1()
-	{
-            float max = chercheMax();
-            
-            while(max>0)
-            {
-		cherchePivot();
-		soustractionLigne();
-		divisionLignePivot();
-		//changementVariableBase();
-  		//afficheMatrice();
-                max = chercheMax();
-            }
-             System.out.println("Fin du probleme");
-	}*/
-        public void resolutionProblemeMethode1()
+	public void resolutionProblemeMethode1()
 	{
             float max = chercheMax();
 
@@ -59,7 +44,7 @@ public class Matrice {
 		soustractionLigne();
 		divisionLignePivot();
 		changementVariableBase();
-  		//afficheMatrice();
+  		nbIteration++;
              }
              System.out.println("Fin du probleme");
 	}
@@ -356,6 +341,56 @@ public class Matrice {
             matriceNomVariableBase[pivot.getLigne()]=matriceNomVariable[pivot.getColonne()];
 	}
 
+
+        //Fonction pour afficher infos sur le pivot
+        public String pivot()
+        {
+            String textePivot;
+            if(getNumMethode()==1)
+            {
+                cherchePivot();
+            }
+            else if (getNumMethode()==2)
+            {
+                cherchePivot2();
+            }
+
+            
+            textePivot = "Pivot : \n "
+                    + "Valeur : " + this.pivot.getValeur() + "\n"
+                    + "Ligne : " + this.pivot.getLigne() + "\n"
+                    + "Colonne : " + this.pivot.getColonne();
+
+            return textePivot;
+        }
+
+        //Fonction pour afficher les infos sur la variable qui entre dans la base
+        public String variableBase ()
+        {
+            String texteVariableBase;
+
+            texteVariableBase = "La variable qui rentre dans la base est : " + matriceNomVariable[pivot.getColonne()];
+
+            return texteVariableBase;
+        }
+
+        //Fonction qui affiche les infos sur le max
+        public String valeurMaxi ()
+        {
+            String texteValeurMax;
+            float valeurMax = -(matrice[matrice.length-1][matrice[0].length-1]);
+            texteValeurMax = "Le maximum est : " + valeurMax;
+            return texteValeurMax;
+        }
+
+        //Affiche caractéristique matrice
+        public String toString()
+        {
+            String resultat;
+            resultat = pivot()+"\n"+variableBase()+"\n"+valeurMaxi(); 
+            return resultat;
+        }
+
         /**
 	 * Getteur matrice
 	 */
@@ -379,6 +414,11 @@ public class Matrice {
         return numMethode;
     }
 
+    public int getNbIteration() {
+        return nbIteration;
+    }
+
+    
     /**
 	 * Setter matrice
 	 */

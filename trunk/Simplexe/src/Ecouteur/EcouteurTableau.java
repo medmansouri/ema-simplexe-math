@@ -11,14 +11,14 @@ public class EcouteurTableau implements ActionListener{
 
         private Matrice matrice;
       private InterfaceTableau ihmTableau;
-            private EcouteurContraintes ecouteurContraintes;
+           
 
 
-	public EcouteurTableau(InterfaceTableau ihmTableau, Matrice matrice, EcouteurContraintes ecouteurContraintes)
+	public EcouteurTableau(InterfaceTableau ihmTableau, Matrice matrice)
 	{
             this.ihmTableau = ihmTableau;
             this.matrice = matrice;
-            this.ecouteurContraintes = ecouteurContraintes;
+          
             
 	}
 
