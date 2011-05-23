@@ -30,7 +30,10 @@ public class Matrice {
 		this.nbVariables=nbVariables;
 		this.nbVariablesEcart=nbContraintes;
 		this.ihmContrainte=ihmContrainte;
-		matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
+                matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
+		this.creationMatriceNomVariable();
+                this.creationMatriceNomVariableBase();
+                this.remplirMatrice();
 	}
 
         //Fonction pour resoudre le probleme par la premiere methode
@@ -45,6 +48,7 @@ public class Matrice {
 		divisionLignePivot();
 		changementVariableBase();
   		nbIteration++;
+                afficheMatriceDepart();
              }
              System.out.println("Fin du probleme");
 	}
@@ -66,15 +70,15 @@ public class Matrice {
 	//Remplissage de la matrice avec les valeurs des coefficients + matrice identite + matrice result + matrice fonction eco
 	public void remplirMatrice()
 	{
-		int i=0;
+		float matriceDepartTemp[][] = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];;
+                int i=0;
 		while (i<ihmContrainte.getTabVariables().size())
 		{
 			for(int j=0;j<nbContraintes;j++)
 			{
 				for(int k=0;k<nbVariables;k++)
 				{
-                                    this.matriceDepart[j][k]=(float) ((Number)ihmContrainte.getTabVariables().get(i).getValue()).doubleValue();
-                                    //this.matriceDepart[j][k]=Integer.parseInt(ihmContrainte.getTabVariables().get(i).getText());
+                                    matriceDepartTemp[j][k]=(float) ((Number)ihmContrainte.getTabVariables().get(i).getValue()).doubleValue();
                                     i++;
 				}
 			}
@@ -87,7 +91,7 @@ public class Matrice {
 		{
 			for(int j=0; j<matriceIdentite.length;j++)
 			{
-				matriceDepart[i][nbVariables+j]=matriceIdentite[i][j];	
+				matriceDepartTemp[i][nbVariables+j]=matriceIdentite[i][j];	
 				
 			}			
 		}
@@ -96,16 +100,17 @@ public class Matrice {
 		float matriceResult[] = creationMatriceMaximisant();
 		for(i=0;i<matriceResult.length;i++)
 		{
-			matriceDepart[i][matriceDepart[0].length-1]=matriceResult[i];
+			matriceDepartTemp[i][matriceDepartTemp[0].length-1]=matriceResult[i];
 		}
 		
 		//Ajout de la matrice de la fonction �conomique
 		float matriceFonctionEco[] = creationMatriceFonctionEco();
 		for(i=0;i<matriceFonctionEco.length;i++)
 		{
-			matriceDepart[matriceDepart.length-1][i]=matriceFonctionEco[i];
+			matriceDepartTemp[matriceDepartTemp.length-1][i]=matriceFonctionEco[i];
 		}
-                this.matrice = this.matriceDepart;
+                this.matrice = matriceDepartTemp;
+                this.matriceDepart = matriceDepartTemp;
 	}
 
 
@@ -216,6 +221,18 @@ public class Matrice {
 	    	for (int j=0; j<matrice[0].length  ; j++)
 	    	{
 	    		System.out.print(matrice[i][j]+" ");
+	    	}
+	        System.out.println();
+	    }
+	}
+        
+        public void afficheMatriceDepart()
+	{		
+	    for (int i=0; i<matriceDepart.length ; i++)
+	    {
+	    	for (int j=0; j<matriceDepart[0].length  ; j++)
+	    	{
+	    		System.out.print(matriceDepart[i][j]+" ");
 	    	}
 	        System.out.println();
 	    }
