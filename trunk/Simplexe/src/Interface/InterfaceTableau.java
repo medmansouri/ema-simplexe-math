@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 
 import Ecouteur.*;
-import Modele.Matrice;
+import Modele.Simplexe;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class InterfaceTableau extends JFrame{
 
 
-        private Matrice matrice;
+        private Simplexe matrice;
 	private JButton boutonSuite=new JButton("Iteration suivante");
         private JButton boutonNouveau = new JButton("Nouveau problème");
         private JButton boutonAutreMethode = new JButton("Résoudre le même problème avec une autre méthode");
@@ -30,7 +30,7 @@ public class InterfaceTableau extends JFrame{
         private JTextArea affichage;
        
 
-        public InterfaceTableau(Matrice matrice)
+        public InterfaceTableau(Simplexe matrice)
         {
             this.matrice=matrice;
             constructionAffichage();
@@ -38,13 +38,10 @@ public class InterfaceTableau extends JFrame{
 
         private void constructionAffichage()
         {
-
-
             //Pannel Nord
             JPanel panelNord = new JPanel();
             JLabel titre = new JLabel("Itération " + matrice.getNbIteration());
             panelNord.add(titre);
-
 
             //Pannel centre
             JTable maJTable = new JTable();
@@ -118,10 +115,6 @@ public class InterfaceTableau extends JFrame{
 		maFenetre.setVisible(false);
 	}
 
-        public void affichePopUp()
-        {
-            JOptionPane.showMessageDialog(this, "Plus d'itération possible");
-        }
 
     public JTextArea getAffichage() {
         return affichage;
