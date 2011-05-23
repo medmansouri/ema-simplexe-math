@@ -33,7 +33,7 @@ public class EcouteurTableau implements ActionListener{
             } 
             else if (e.getSource() == ihmTableau.getBoutonSuite())
             {
-                float max = matrice.chercheMax();
+                float max = matrice.chercheMax(matrice.getMatrice());
                 if (max > 0)
                 {
 
@@ -62,7 +62,7 @@ public class EcouteurTableau implements ActionListener{
                     this.matrice.setNumMethode(1);
                 }
 
-                //this.matrice.setMatrice(matrice.getMatriceDepart());
+                this.matrice.getMatrice().setMatrice(matrice.getMatriceDepart().getMatrice());
       
                 this.ihmTableau.closeTableau();
                 ihmTableau = new InterfaceTableau(matrice);
