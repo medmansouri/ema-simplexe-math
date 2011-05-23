@@ -25,6 +25,7 @@ public class InterfaceTableau extends JFrame{
         private Matrice matrice;
 	private JButton boutonSuite=new JButton("Iteration suivante");
         private JButton boutonNouveau = new JButton("Nouveau problème");
+        private JButton boutonAutreMethode = new JButton("Résoudre le même problème avec une autre méthode");
    	public JFrame maFenetre=new JFrame("Simplexe - TOMIO & NAVARRO");
         private JTextArea affichage;
        
@@ -74,8 +75,11 @@ public class InterfaceTableau extends JFrame{
             //panel sud
             JPanel panelSud = new JPanel();
             panelSud.setLayout((new GridLayout(1,3)));
+            boutonAutreMethode.setVisible(false);
             panelSud.add(boutonSuite);
+            panelSud.add(boutonAutreMethode);
             panelSud.add(boutonNouveau);
+          
             
             //Panel est
             JPanel panelEst = new JPanel();
@@ -87,17 +91,23 @@ public class InterfaceTableau extends JFrame{
             {
                 affichage = new JTextArea(matrice.toStringFin());
                 boutonSuite.setVisible(false);
+                boutonAutreMethode.setVisible(true);
             }
             affichage.setPreferredSize(new Dimension(300,250));
             panelEst.add(affichage);
             
+            //Ajout de panel a la fenêtre
             maFenetre.add(panelNord,BorderLayout.NORTH);
             maFenetre.add(panelEst,BorderLayout.EAST);
             maFenetre.add(panelCentre,BorderLayout.CENTER);
             maFenetre.add(panelSud,BorderLayout.SOUTH);
-          
-            boutonSuite.addActionListener(new EcouteurTableau(this, matrice));
 
+            //Déclaraation des écouteurs
+            EcouteurTableau ecouteur = new EcouteurTableau(this, matrice);
+            boutonSuite.addActionListener(ecouteur);
+            boutonNouveau.addActionListener(ecouteur);
+
+            //On affiche la fenêtre
             maFenetre.pack();
             maFenetre.setVisible(true);
         }
@@ -120,6 +130,18 @@ public class InterfaceTableau extends JFrame{
     public JButton getBoutonNouveau() {
         return boutonNouveau;
     }
+
+    public JButton getBoutonSuite() {
+        return boutonSuite;
+    }
+
+    public JButton getBoutonAutreMethode() {
+        return boutonAutreMethode;
+    }
+
+    
+
+    
 
     
 

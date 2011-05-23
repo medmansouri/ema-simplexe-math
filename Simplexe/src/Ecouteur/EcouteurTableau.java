@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class EcouteurTableau implements ActionListener{
 
-        private Matrice matrice;
+      private Matrice matrice;
       private InterfaceTableau ihmTableau;
       private InterfaceAccueil ihmAccueil;
            
@@ -28,10 +28,11 @@ public class EcouteurTableau implements ActionListener{
 	{
             if (e.getSource() == ihmTableau.getBoutonNouveau())
             {
+                System.out.println("Bouton nouveau appuyé");
                 this.ihmTableau.closeTableau();
                 ihmAccueil = new InterfaceAccueil();
             } 
-            else
+            else if (e.getSource() == ihmTableau.getBoutonSuite())
             {
                 float max = matrice.chercheMax();
                 if (max > 0)
@@ -45,16 +46,27 @@ public class EcouteurTableau implements ActionListener{
                     else if (matrice.getNumMethode() == 2) {
                         matrice.resolutionProblemeMethode2();
                     }
-                     this.ihmTableau.closeTableau();
-                    
-                    ihmTableau = new InterfaceTableau(matrice);              
+                      
 
 
-                } else
+                } 
+            }
+            /*else if(e.getSource()==ihmTableau.getBoutonAutreMethode())
+            {
+                if (this.matrice.getNumMethode()==1)
                 {
-                    ihmTableau.affichePopUp();
+                    this.matrice.setNumMethode(2);
                 }
-            }           
+                else if (this.matrice.getNumMethode()==2)
+                {
+                    this.matrice.setNumMethode(1);
+                }
+
+                this.matrice.setMatrice(matrice.getMatriceDepart());
+                this.ihmTableau.closeTableau();
+                ihmTableau = new InterfaceTableau(matrice);
+            }*/
+
 	
 	}
 }

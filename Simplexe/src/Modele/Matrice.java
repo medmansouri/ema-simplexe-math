@@ -440,7 +440,11 @@ public class Matrice {
         this.numMethode = numMethode;
     }
 
-        
+    public void setMatrice(float[][] matrice) {
+        this.matrice = matrice;
+    }
+
+    
     
 
     
