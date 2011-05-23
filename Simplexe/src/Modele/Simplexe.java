@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 
 import Interface.InterfaceContraintes;
-import Interface.InterfaceTableau;
 
-
-public class Matrice {
+public final class Simplexe {
 	
 	private int nbContraintes;
 	private int nbVariables;
@@ -24,16 +22,14 @@ public class Matrice {
 
 
 	
-	public Matrice(int nbContraintes, int nbVariables, InterfaceContraintes ihmContrainte) 
+	public Simplexe(int nbContraintes, int nbVariables, InterfaceContraintes ihmContrainte)
 	{
 		this.nbContraintes=nbContraintes;
 		this.nbVariables=nbVariables;
 		this.nbVariablesEcart=nbContraintes;
 		this.ihmContrainte=ihmContrainte;
-                matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
-		this.creationMatriceNomVariable();
-                this.creationMatriceNomVariableBase();
-                this.remplirMatrice();
+                this.matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
+                this.matrice = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
 	}
 
         //Fonction pour resoudre le probleme par la premiere methode
@@ -202,7 +198,7 @@ public class Matrice {
 	
 	}
 	
-	//Creation de la matrice avec les noms de variable appartenant � la base
+	//Creation de la matrice avec les noms de variable appartenant a la base
 	public void creationMatriceNomVariableBase()
 	{
 		matriceNomVariableBase = creationMatriceNomVariableEcart();
@@ -248,8 +244,7 @@ public class Matrice {
 				jMaxDerniereLigne=j;
 			}
 		}
-                System.out.println("Le maximum est : " + maximum);
-		return maximum;
+   		return maximum;
 	}
 	
 	//Cherche le pivot 1ere methode
@@ -259,16 +254,16 @@ public class Matrice {
 		float calcul;
                 calculPivot = 9999;
                 elementMatrice pivotTemp = null;
-		for (int i=0;i<matrice.length-1;i++)
+		for (int i=0;i<this.matrice.length-1;i++)
 		{
-			calcul= (float)(matrice[i][matrice[0].length-1])/(matrice[i][jMaxDerniereLigne]);
+			calcul= (float)(this.matrice[i][this.matrice[0].length-1])/(this.matrice[i][jMaxDerniereLigne]);
                         if(calcul<calculPivot && calcul > 0)
 			{
 				calculPivot=calcul;
 				pivotTemp = new elementMatrice();
                                 pivotTemp.setColonne(jMaxDerniereLigne);
                                 pivotTemp.setLigne(i);
-                                pivotTemp.setValeur(matrice[i][jMaxDerniereLigne]);
+                                pivotTemp.setValeur(this.matrice[i][jMaxDerniereLigne]);
 			}
 		}
                 this.pivot = pivotTemp;
@@ -327,21 +322,21 @@ public class Matrice {
 	{
 		for(int j=0; j<matrice[0].length;j++)
 		{
-			matrice[pivot.getLigne()][j]=(matrice[pivot.getLigne()][j])/pivot.getValeur();
+			this.matrice[pivot.getLigne()][j]=(this.matrice[pivot.getLigne()][j])/pivot.getValeur();
 		}
 	}
 	
 	//Fonction qui soustrait chaque ligne a la ligne du pivot multiplié par un coefficient
 	public void soustractionLigne()
 	{
-		for (int i=0;i<matrice.length;i++)
+		for (int i=0;i<this.matrice.length;i++)
 		{
 			if(i!=pivot.getLigne())
 			{
-				float coeffSoustraction = (matrice[i][pivot.getColonne()])/pivot.getValeur();
+				float coeffSoustraction = (this.matrice[i][pivot.getColonne()])/pivot.getValeur();
 				for (int j=0;j<matrice[0].length;j++)
 				{
-					matrice[i][j]= (matrice[i][j])-(coeffSoustraction*matrice[pivot.getLigne()][j]);
+					this.matrice[i][j]= (this.matrice[i][j])-(coeffSoustraction*this.matrice[pivot.getLigne()][j]);
 				}
 			}
 		}
@@ -422,9 +417,9 @@ public class Matrice {
 		return matrice;
 	}
 
-    public float[][] getMatriceDepart() {
+    /*public float[][] getMatriceDepart() {
         return matriceDepart;
-    }
+    }*/
 
     public String[] getMatriceNomVariable() {
         return matriceNomVariable;

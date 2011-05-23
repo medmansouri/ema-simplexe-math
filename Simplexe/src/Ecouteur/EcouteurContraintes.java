@@ -7,7 +7,7 @@ import Interface.InterfaceAccueil;
 import Interface.InterfaceContraintes;
 
 import Interface.InterfaceTableau;
-import Modele.Matrice;
+import Modele.Simplexe;
 
 public class EcouteurContraintes implements ActionListener{
 
@@ -16,7 +16,7 @@ public class EcouteurContraintes implements ActionListener{
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart=0;
-	private Matrice matrice;
+	private Simplexe matrice;
         
 	
 	public EcouteurContraintes(InterfaceContraintes interfacesContraintes, int nbContraintes, int nbVariables) 
@@ -28,10 +28,10 @@ public class EcouteurContraintes implements ActionListener{
 
 	public void actionPerformed(ActionEvent e)
 	{
-		matrice = new Matrice(nbContraintes, nbVariables, ihmContraintes);
-		/*matrice.creationMatriceNomVariable();
+		matrice = new Simplexe(nbContraintes, nbVariables, ihmContraintes);
+		matrice.creationMatriceNomVariable();
 		matrice.creationMatriceNomVariableBase();
-                matrice.remplirMatrice();*/
+                matrice.remplirMatrice();
                 
                 
                 if(e.getSource()== ihmContraintes.getBoutonMethode1())
