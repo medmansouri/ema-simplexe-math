@@ -41,12 +41,13 @@ public final class Simplexe {
 
             if(max>0)
             {
-		cherchePivot(this.matrice);
-		soustractionLigne(this.matrice);
-		divisionLignePivot(this.matrice);
+		afficheMatrice(this.matriceDepart);
+                cherchePivot(this.matrice);
+		soustractionLigne(matrice);
+		divisionLignePivot(matrice);
 		changementVariableBase();
   		nbIteration++;
-                afficheMatrice(this.matriceDepart);
+                
              }
              System.out.println("Fin du probleme");
 	}
