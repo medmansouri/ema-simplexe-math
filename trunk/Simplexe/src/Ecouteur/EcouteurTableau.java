@@ -49,7 +49,6 @@ public class EcouteurTableau implements ActionListener{
                     this.ihmTableau.closeTableau();
                     ihmTableau = new InterfaceTableau(matrice);
 
-
                 } 
             }
             else if(e.getSource()==ihmTableau.getBoutonAutreMethode())
@@ -63,7 +62,8 @@ public class EcouteurTableau implements ActionListener{
                     this.matrice.setNumMethode(1);
                 }
 
-                this.matrice.setMatrice(matrice.getMatriceDepart());
+                //this.matrice.setMatrice(matrice.getMatriceDepart());
+      
                 this.ihmTableau.closeTableau();
                 ihmTableau = new InterfaceTableau(matrice);
             }

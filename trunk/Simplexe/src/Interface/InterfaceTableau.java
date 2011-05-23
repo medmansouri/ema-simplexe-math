@@ -68,7 +68,6 @@ public class InterfaceTableau extends JFrame{
                 }
             }         
             String[] header = new String[matrice.getMatriceNomVariable().length+2];
-            header[0] = "colonne1"; // etc
             maJTable.setModel(new DefaultTableModel(contenu,header));
             panelCentre.add(maJTable);
             
