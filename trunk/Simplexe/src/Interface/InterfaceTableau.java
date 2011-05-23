@@ -46,7 +46,7 @@ public class InterfaceTableau extends JFrame{
             //Pannel centre
             JTable maJTable = new JTable();
             JPanel panelCentre = new JPanel();
-            Object[][] contenu = new Object[matrice.getMatrice().length+1][matrice.getMatrice()[0].length+1];
+            Object[][] contenu = new Object[matrice.getMatrice().getNbLignes()+1][matrice.getMatrice().getNbColonnes()+1];
 
            //On remplit le contenu
             for (int i=0; i<matrice.getMatriceNomVariable().length;i++)
@@ -57,11 +57,11 @@ public class InterfaceTableau extends JFrame{
             {
                 contenu[j+1][0] = matrice.getMatriceNomVariableBase()[j];
             }
-            for(int i=0; i<matrice.getMatrice().length;i++)
+            for(int i=0; i<matrice.getMatrice().getMatrice().length;i++)
             {
-                for(int j=0; j<matrice.getMatrice()[0].length;j++)
+                for(int j=0; j<matrice.getMatrice().getMatrice()[0].length;j++)
                 {
-                    contenu[i+1][j+1] = matrice.getMatrice()[i][j];
+                    contenu[i+1][j+1] = matrice.getMatrice().getMatrice()[i][j];
                 }
             }         
             String[] header = new String[matrice.getMatriceNomVariable().length+2];
@@ -79,7 +79,7 @@ public class InterfaceTableau extends JFrame{
             
             //Panel est
             JPanel panelEst = new JPanel();
-            if(matrice.chercheMax() > 0)
+            if(matrice.chercheMax(matrice.getMatrice()) > 0)
             {
                 affichage=new JTextArea(matrice.toString());
             }

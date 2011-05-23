@@ -10,9 +10,11 @@ public final class Simplexe {
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart;
-        private float[][] matriceDepart;
-	private float[][] matrice;
-	private String[] matriceNomVariable;
+        //private float[][] matriceDepart;
+	//private float[][] matrice;
+	private Matrice matriceDepart;
+        private Matrice matrice;
+        private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
 	private InterfaceContraintes ihmContrainte;
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
@@ -28,36 +30,35 @@ public final class Simplexe {
 		this.nbVariables=nbVariables;
 		this.nbVariablesEcart=nbContraintes;
 		this.ihmContrainte=ihmContrainte;
-                this.matriceDepart = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
-                this.matrice = new float[nbContraintes+1][nbVariables+nbVariablesEcart+1];
+                this.matriceDepart = new Matrice(nbContraintes+1,nbVariables+nbVariablesEcart+1);
+                this.matrice = new Matrice(nbContraintes+1,nbVariables+nbVariablesEcart+1);
 	}
 
         //Fonction pour resoudre le probleme par la premiere methode
 	public void resolutionProblemeMethode1()
 	{
-            float max = chercheMax();
+            float max = chercheMax(this.matrice);
 
             if(max>0)
             {
-		cherchePivot();
-		soustractionLigne();
-		divisionLignePivot();
+		cherchePivot(this.matrice);
+		soustractionLigne(this.matrice);
+		divisionLignePivot(this.matrice);
 		changementVariableBase();
   		nbIteration++;
-                afficheMatriceDepart();
+                afficheMatrice(this.matriceDepart);
              }
              System.out.println("Fin du probleme");
 	}
 
         public void resolutionProblemeMethode2()
 	{
-            float max = chercheMax();
+            float max = chercheMax(this.matrice);
             if(max>0)
             {
-                afficheMatriceDepart();
-		cherchePivot2();
-		soustractionLigne();
-		divisionLignePivot();
+                cherchePivot2(this.matrice);
+		soustractionLigne(this.matrice);
+		divisionLignePivot(this.matrice);
 		changementVariableBase();
 		nbIteration++;
             }
@@ -106,8 +107,11 @@ public final class Simplexe {
 		{
 			matriceDepartTemp[matriceDepartTemp.length-1][i]=matriceFonctionEco[i];
 		}
-                this.matrice = matriceDepartTemp;
-                this.matriceDepart = matriceDepartTemp;
+
+                matrice.setMatrice(matriceDepartTemp);
+                //this.matrice = matriceDepartTemp;
+                matriceDepart.setMatrice(matriceDepartTemp);
+                //this.matriceDepart = matriceDepartTemp;
 	}
 
 
@@ -147,13 +151,13 @@ public final class Simplexe {
 	//Creation de la matrice de la fonction �conomique
 	public float[] creationMatriceFonctionEco()
 	{
-		float matriceFonctionEco[] = new float[matriceDepart[0].length];
+		float matriceFonctionEco[] = new float[matriceDepart.getMatrice()[0].length];
 
 		for(int i=0; i<nbVariables; i++)
 		{
 			matriceFonctionEco[i]=Integer.parseInt(ihmContrainte.getTabFonctionEco().get(i).getText());
 		}
-		for (int j=nbVariables;j<matriceDepart[0].length-1;j++)
+		for (int j=nbVariables;j<matriceDepart.getMatrice()[0].length-1;j++)
 		{
 			matriceFonctionEco[j]=0;
 		}
@@ -179,7 +183,7 @@ public final class Simplexe {
 	//Creation de la matrice avec les noms de variables
 	public void creationMatriceNomVariable()
 	{
-		matriceNomVariable = new String[matriceDepart[0].length-1];
+		matriceNomVariable = new String[matriceDepart.getMatrice()[0].length-1];
 		String[] matriceNomVariableEcart = creationMatriceNomVariableEcart();
 		
 		//Ajout des noms des variables
@@ -206,41 +210,29 @@ public final class Simplexe {
 	}
 		
 	//Fonction pour afficher la matrice
-	public void afficheMatrice()
+	public void afficheMatrice(Matrice maMatrice)
 	{		
-	    for (int i=0; i<matrice.length ; i++)
+	    for (int i=0; i<maMatrice.getMatrice().length ; i++)
 	    {
-	    	for (int j=0; j<matrice[0].length  ; j++)
+	    	for (int j=0; j<maMatrice.getMatrice()[0].length  ; j++)
 	    	{
-	    		System.out.print(matrice[i][j]+" ");
-	    	}
-	        System.out.println();
-	    }
-	}
-        
-        public void afficheMatriceDepart()
-	{		
-	    for (int i=0; i<matriceDepart.length ; i++)
-	    {
-	    	for (int j=0; j<matriceDepart[0].length  ; j++)
-	    	{
-	    		System.out.print(matriceDepart[i][j]+" ");
+	    		System.out.print(maMatrice.getMatrice()[i][j]+" ");
 	    	}
 	        System.out.println();
 	    }
 	}
 	
 	//Cherche le maximum sur la derniere ligne
-	public float chercheMax()
+	public float chercheMax(Matrice maMatrice)
 	{
 		float maximum = 0;		
-		int tailleMatrice = matrice.length;
+		int tailleMatrice = maMatrice.getMatrice().length;
 		
-		for(int j=0;j<matrice[0].length;j++)
+		for(int j=0;j<maMatrice.getMatrice()[0].length;j++)
 		{
-			if (matrice[tailleMatrice-1][j] > maximum)
+			if (maMatrice.getMatrice()[tailleMatrice-1][j] > maximum)
 			{
-				maximum = matrice[tailleMatrice-1][j];
+				maximum = maMatrice.getMatrice()[tailleMatrice-1][j];
 				jMaxDerniereLigne=j;
 			}
 		}
@@ -248,29 +240,29 @@ public final class Simplexe {
 	}
 	
 	//Cherche le pivot 1ere methode
-	public void cherchePivot()
+	public void cherchePivot(Matrice maMatrice)
 	{
 		float calculPivot;
 		float calcul;
                 calculPivot = 9999;
                 elementMatrice pivotTemp = null;
-		for (int i=0;i<this.matrice.length-1;i++)
+		for (int i=0;i<maMatrice.getMatrice().length-1;i++)
 		{
-			calcul= (float)(this.matrice[i][this.matrice[0].length-1])/(this.matrice[i][jMaxDerniereLigne]);
+			calcul= (float)(maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1])/(maMatrice.getMatrice()[i][jMaxDerniereLigne]);
                         if(calcul<calculPivot && calcul > 0)
 			{
 				calculPivot=calcul;
 				pivotTemp = new elementMatrice();
                                 pivotTemp.setColonne(jMaxDerniereLigne);
                                 pivotTemp.setLigne(i);
-                                pivotTemp.setValeur(this.matrice[i][jMaxDerniereLigne]);
+                                pivotTemp.setValeur(maMatrice.getMatrice()[i][jMaxDerniereLigne]);
 			}
 		}
                 this.pivot = pivotTemp;
 	}
 
         //Fonction qui cherche le pivot pour la deuxième méthode
-        public void cherchePivot2()
+        public void cherchePivot2(Matrice maMatrice)
         {
             elementMatrice pivotTemp = null;
             float valeurRapport=9999;
@@ -278,21 +270,21 @@ public final class Simplexe {
             ArrayList<elementMatrice> tabPivotTemp = new ArrayList<elementMatrice> ();
             ArrayList<Float> tabValeurMultiple = new ArrayList<Float> ();
             
-            for (int j=0; j<matrice[0].length;j++)
+            for (int j=0; j<maMatrice.getMatrice()[0].length;j++)
             {
                 valeurRapport = 9999;
-                if (matrice[matrice.length-1][j] > 0)
+                if (maMatrice.getMatrice()[maMatrice.getMatrice().length-1][j] > 0)
                 {                                       
-                    for (int i=0; i<matrice.length-1;i++)
+                    for (int i=0; i<maMatrice.getMatrice().length-1;i++)
                     {
-                        if(matrice[i][matrice[0].length-1] / matrice[i][j] < valeurRapport)
+                        if(maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1] / maMatrice.getMatrice()[i][j] < valeurRapport)
                         {
-                           valeurRapport = matrice[i][matrice[0].length-1] / matrice[i][j];
+                           valeurRapport = maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1] / maMatrice.getMatrice()[i][j];
                            pivotTemp = new elementMatrice();
-                           pivotTemp.setValeur(matrice[i][j]);
+                           pivotTemp.setValeur(maMatrice.getMatrice()[i][j]);
                            pivotTemp.setLigne(i);
                            pivotTemp.setColonne(j);
-                           valeurMultiplie = valeurRapport*matrice[matrice.length-1][j];                         
+                           valeurMultiplie = valeurRapport*maMatrice.getMatrice()[maMatrice.getMatrice().length-1][j];
                         }
                     }                  
                     tabPivotTemp.add(pivotTemp);            
@@ -318,25 +310,25 @@ public final class Simplexe {
         }
 	
 	//Fonction qui divise la ligne du pivot par la valeur du pivot
-	public void divisionLignePivot()
+	public void divisionLignePivot(Matrice maMatrice)
 	{
-		for(int j=0; j<matrice[0].length;j++)
+		for(int j=0; j<maMatrice.getMatrice()[0].length;j++)
 		{
-			this.matrice[pivot.getLigne()][j]=(this.matrice[pivot.getLigne()][j])/pivot.getValeur();
+			maMatrice.getMatrice()[pivot.getLigne()][j]=(maMatrice.getMatrice()[pivot.getLigne()][j])/pivot.getValeur();
 		}
 	}
 	
 	//Fonction qui soustrait chaque ligne a la ligne du pivot multiplié par un coefficient
-	public void soustractionLigne()
+	public void soustractionLigne(Matrice maMatrice)
 	{
-		for (int i=0;i<this.matrice.length;i++)
+		for (int i=0;i<maMatrice.getMatrice().length;i++)
 		{
 			if(i!=pivot.getLigne())
 			{
-				float coeffSoustraction = (this.matrice[i][pivot.getColonne()])/pivot.getValeur();
-				for (int j=0;j<matrice[0].length;j++)
+				float coeffSoustraction = (maMatrice.getMatrice()[i][pivot.getColonne()])/pivot.getValeur();
+				for (int j=0;j<maMatrice.getMatrice()[0].length;j++)
 				{
-					this.matrice[i][j]= (this.matrice[i][j])-(coeffSoustraction*this.matrice[pivot.getLigne()][j]);
+					maMatrice.getMatrice()[i][j]= (maMatrice.getMatrice()[i][j])-(coeffSoustraction*maMatrice.getMatrice()[pivot.getLigne()][j]);
 				}
 			}
 		}
@@ -354,11 +346,11 @@ public final class Simplexe {
             String textePivot;
             if(getNumMethode()==1)
             {
-                cherchePivot();
+                cherchePivot(this.matrice);
             }
             else if (getNumMethode()==2)
             {
-                cherchePivot2();
+                cherchePivot2(this.matrice);
             }
 
             
@@ -381,10 +373,10 @@ public final class Simplexe {
         }
 
         //Fonction qui affiche les infos sur le max
-        public String valeurMaxi ()
+        public String valeurMaxi (Matrice maMatrice)
         {
             String texteValeurMax;
-            float valeurMax = -(matrice[matrice.length-1][matrice[0].length-1]);
+            float valeurMax = -(maMatrice.getMatrice()[maMatrice.getMatrice().length-1][maMatrice.getMatrice()[0].length-1]);
             texteValeurMax = "Le maximum est : " + valeurMax;
             return texteValeurMax;
         }
@@ -393,7 +385,7 @@ public final class Simplexe {
         public String toString()
         {
             String resultat;
-            resultat = pivot()+"\n"+variableBase()+"\n"+valeurMaxi(); 
+            resultat = pivot()+"\n"+variableBase()+"\n"+valeurMaxi(this.matrice);
             return resultat;
         }
 
@@ -404,7 +396,7 @@ public final class Simplexe {
 
             resultat = "Il n'y a plus d'itération possible. Le programme est fini"
                     + "\n" + " Nombre d'itérations effectuées : " + getNbIteration()
-                    + "\n" + valeurMaxi();
+                    + "\n" + valeurMaxi(this.matrice);
 
             return resultat;
         }
@@ -413,13 +405,7 @@ public final class Simplexe {
         /**
 	 * Getteur matrice
 	 */
-	public float[][] getMatrice() {
-		return matrice;
-	}
 
-    /*public float[][] getMatriceDepart() {
-        return matriceDepart;
-    }*/
 
     public String[] getMatriceNomVariable() {
         return matriceNomVariable;
@@ -446,9 +432,16 @@ public final class Simplexe {
         this.numMethode = numMethode;
     }
 
-    public void setMatrice(float[][] matrice) {
-        this.matrice = matrice;
+    public Matrice getMatrice() {
+        return matrice;
     }
+
+    public Matrice getMatriceDepart() {
+        return matriceDepart;
+    }
+
+    
+
 
     
     
