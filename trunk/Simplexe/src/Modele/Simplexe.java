@@ -10,8 +10,6 @@ public final class Simplexe {
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart;
-        //private float[][] matriceDepart;
-	//private float[][] matrice;
 	private Matrice matriceDepart;
         private Matrice matrice;
         private String[] matriceNomVariable;
@@ -114,8 +112,6 @@ public final class Simplexe {
                 matriceDepart.setMatrice(matriceDepartTemp);
                 //this.matriceDepart = matriceDepartTemp;
 	}
-
-
 	
 	//Creation de la matrice identite
 	public float[][] creationMatriceIdentite()
@@ -166,7 +162,7 @@ public final class Simplexe {
 		return matriceFonctionEco;
 	}
 		
-	//Creation nom variable valeur d'�cart	
+	//Creation nom variable valeur d'ecart
 	public String[] creationMatriceNomVariableEcart()
 	{
 		String[] matriceNomVariableEcart = new String[nbVariablesEcart];
@@ -356,9 +352,9 @@ public final class Simplexe {
 
             
             textePivot = "Pivot : \n "
-                    + "Valeur : " + this.pivot.getValeur() + "\n"
-                    + "Ligne : " + this.pivot.getLigne() + "\n"
-                    + "Colonne : " + this.pivot.getColonne();
+                    +"Valeur : "+this.pivot.getValeur() + "\n"
+                    +"Ligne : " + this.pivot.getLigne() + "\n"
+                    +"Colonne : " + this.pivot.getColonne();
 
             return textePivot;
         }
