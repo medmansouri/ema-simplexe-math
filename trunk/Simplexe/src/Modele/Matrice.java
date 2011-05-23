@@ -58,6 +58,7 @@ public class Matrice {
             float max = chercheMax();
             if(max>0)
             {
+                afficheMatriceDepart();
 		cherchePivot2();
 		soustractionLigne();
 		divisionLignePivot();
@@ -198,12 +199,7 @@ public class Matrice {
 			matriceNomVariable[j]=matriceNomVariableEcart[i];
 			i++;
 		}
-
-                for(int k=0;k<matriceNomVariable.length;k++)
-		{
-                    System.out.println(matriceNomVariable[k]);
-		}
-			
+	
 	}
 	
 	//Creation de la matrice avec les noms de variable appartenant � la base
@@ -349,9 +345,7 @@ public class Matrice {
 				}
 			}
 		}
-                System.out.println("La valeur est : " + matrice[matrice.length-1][matrice[0].length-1]);
-	}
-	
+        }	
 	//Fonction qui fait entrer un nom de variable dans la base
 	public void changementVariableBase()
 	{
