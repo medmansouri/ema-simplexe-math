@@ -106,6 +106,7 @@ public class InterfaceTableau extends JFrame{
             EcouteurTableau ecouteur = new EcouteurTableau(this, matrice);
             boutonSuite.addActionListener(ecouteur);
             boutonNouveau.addActionListener(ecouteur);
+            boutonAutreMethode.addActionListener(ecouteur);
 
             //On affiche la fenêtre
             maFenetre.pack();
