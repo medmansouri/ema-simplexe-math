@@ -14,6 +14,7 @@ public final class Simplexe {
         private Matrice matrice;
         private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
+        private String[] matriceNomVariableBaseDepart;
 	private InterfaceContraintes ihmContrainte;
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
@@ -39,13 +40,13 @@ public final class Simplexe {
 
             if(max>0)
             {
-		afficheMatrice(this.matriceDepart);
+		
                 cherchePivot(this.matrice);
 		soustractionLigne(matrice);
 		divisionLignePivot(matrice);
 		changementVariableBase();
   		nbIteration++;
-                
+                afficheMatrice(this.matriceDepart);
              }
              System.out.println("Fin du probleme");
 	}
@@ -106,8 +107,8 @@ public final class Simplexe {
 		{
 			matriceDepartTemp[matriceDepartTemp.length-1][i]=matriceFonctionEco[i];
 		}
-
                 matrice.setMatrice(matriceDepartTemp);
+                
                 //this.matrice = matriceDepartTemp;
                 matriceDepart.setMatrice(matriceDepartTemp);
                 //this.matriceDepart = matriceDepartTemp;
@@ -203,7 +204,7 @@ public final class Simplexe {
 	public void creationMatriceNomVariableBase()
 	{
 		matriceNomVariableBase = creationMatriceNomVariableEcart();
-
+                matriceNomVariableBaseDepart = creationMatriceNomVariableEcart();
 	}
 		
 	//Fonction pour afficher la matrice
@@ -436,6 +437,20 @@ public final class Simplexe {
     public Matrice getMatriceDepart() {
         return matriceDepart;
     }
+
+    public void setMatriceNomVariableBase(String[] matriceNomVariableBase) {
+        this.matriceNomVariableBase = matriceNomVariableBase;
+    }
+
+    public String[] getMatriceNomVariableBaseDepart() {
+        return matriceNomVariableBaseDepart;
+    }
+
+    public void setNbIteration(int nbIteration) {
+        this.nbIteration = nbIteration;
+    }
+    
+    
 
     
 
