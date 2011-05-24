@@ -35,7 +35,14 @@ public class Matrice {
     }
 
     public void setMatrice(float[][] matrice) {
-        this.matrice = matrice;
+        for(int i = 0 ; i < nbLignes;i++)
+        {
+            for(int j = 0 ; j < nbColonnes;j++)
+            {
+              this.matrice[i][j] = matrice[i][j];   
+            }
+        }
+        
     }
 
     public void setNbColonnes(int nbColonnes) {

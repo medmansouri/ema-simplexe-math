@@ -63,7 +63,8 @@ public class EcouteurTableau implements ActionListener{
                 }
 
                 this.matrice.getMatrice().setMatrice(matrice.getMatriceDepart().getMatrice());
-      
+                this.matrice.setMatriceNomVariableBase(matrice.getMatriceNomVariableBaseDepart());
+                this.matrice.setNbIteration(0);
                 this.ihmTableau.closeTableau();
                 ihmTableau = new InterfaceTableau(matrice);
             }
