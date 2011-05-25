@@ -8,15 +8,17 @@ import Interface.InterfaceContraintes;
 
 import Interface.InterfaceTableau;
 import Modele.Simplexe;
+import java.util.ArrayList;
 
 public class EcouteurContraintes implements ActionListener{
 
 	public InterfaceContraintes ihmContraintes;
-         private InterfaceTableau ihmTableau;
+        private InterfaceTableau ihmTableau;
 	private int nbContraintes;
 	private int nbVariables;
-	private int nbVariablesEcart=0;
-	private Simplexe matrice;
+	private int nbVariablesAuxiliare=0;
+        private Simplexe matrice;
+        private ArrayList<Integer> tabLigneVariableAuxilliare;
         
 	
 	public EcouteurContraintes(InterfaceContraintes interfacesContraintes, int nbContraintes, int nbVariables) 
@@ -28,15 +30,32 @@ public class EcouteurContraintes implements ActionListener{
 
 	public void actionPerformed(ActionEvent e)
 	{
-		matrice = new Simplexe(nbContraintes, nbVariables, ihmContraintes);
-		matrice.creationMatriceNomVariable();
-		matrice.creationMatriceNomVariableBase();
-                matrice.remplirMatrice();
-                System.out.println("Matrice depart");
-                matrice.afficheMatrice(matrice.getMatriceDepart());
-                System.out.println("Autre matrice ");
-                matrice.afficheMatrice(matrice.getMatrice());
-                
+		tabLigneVariableAuxilliare = new ArrayList<Integer>();
+                for (int i=0; i<ihmContraintes.getTabSigne().size();i++)
+                {
+                    if(ihmContraintes.getTabSigne().get(i).getSelectedItem() == ">=")
+                    {
+                        nbVariablesAuxiliare++;
+                        tabLigneVariableAuxilliare.add(i);
+                    }
+                }
+
+                System.out.println("Nombre Variable auxiliare : " + nbVariablesAuxiliare);
+
+                if(nbVariablesAuxiliare==0)
+                {
+                    matrice = new Simplexe(nbContraintes, nbVariables, ihmContraintes);
+                    matrice.creationMatriceNomVariable();
+                    matrice.creationMatriceNomVariableBase();
+                    matrice.remplirMatrice();
+                }
+                else
+                {
+                    matrice = new Simplexe(nbContraintes, nbVariables, nbVariablesAuxiliare,ihmContraintes, this);
+                    matrice.remplirMatrice();
+                    matrice.afficheMatrice(matrice.getMatrice());
+                    
+                }
                 if(e.getSource()== ihmContraintes.getBoutonMethode1())
                 {                   
                     matrice.setNumMethode(1);
@@ -51,6 +70,11 @@ public class EcouteurContraintes implements ActionListener{
 		ihmTableau = new InterfaceTableau(matrice);
                 
 	}
+
+    public ArrayList<Integer> getTabLigneVariableAuxilliare() {
+        return tabLigneVariableAuxilliare;
+    }
+
 
     
 
