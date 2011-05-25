@@ -1,5 +1,6 @@
 package Modele;
 
+import Ecouteur.EcouteurContraintes;
 import java.util.ArrayList;
 
 
@@ -10,19 +11,21 @@ public final class Simplexe {
 	private int nbContraintes;
 	private int nbVariables;
 	private int nbVariablesEcart;
+        private int nbVariableAuxilliare;
 	private Matrice matriceDepart;
         private Matrice matrice;
         private String[] matriceNomVariable;
 	private String[] matriceNomVariableBase;
         private String[] matriceNomVariableBaseDepart;
 	private InterfaceContraintes ihmContrainte;
+        private EcouteurContraintes ecouteurContrainte;
 	private int jMaxDerniereLigne; //Numero de colone de la valeur max        
 	private elementMatrice pivot = new elementMatrice();
         private int numMethode;
         private int nbIteration=0;
 
 
-	
+	//Constructeur Simplexe pour programme normal
 	public Simplexe(int nbContraintes, int nbVariables, InterfaceContraintes ihmContrainte)
 	{
 		this.nbContraintes=nbContraintes;
@@ -32,6 +35,21 @@ public final class Simplexe {
                 this.matriceDepart = new Matrice(nbContraintes+1,nbVariables+nbVariablesEcart+1);
                 this.matrice = new Matrice(nbContraintes+1,nbVariables+nbVariablesEcart+1);
 	}
+
+        //Constructeur Simplexe pour programme auxilliaire
+        public Simplexe(int nbContraintes, int nbVariables, int nbVariableAuxilliare, InterfaceContraintes ihmContrainte, EcouteurContraintes ecouteurContrainte)
+	{
+		this.nbContraintes=nbContraintes;
+		this.nbVariables=nbVariables;
+		this.nbVariablesEcart=nbContraintes;
+                this.nbVariableAuxilliare=nbVariableAuxilliare;
+		this.ihmContrainte=ihmContrainte;
+                this.ecouteurContrainte=ecouteurContrainte;
+                int taille = nbVariables+nbVariablesEcart+1+nbVariableAuxilliare;
+                this.matriceDepart = new Matrice(nbContraintes+1, taille);
+                this.matrice = new Matrice(nbContraintes+1,taille);
+	}
+
 
         //Fonction pour resoudre le probleme par la premiere methode
 	public void resolutionProblemeMethode1()
@@ -93,6 +111,24 @@ public final class Simplexe {
 				
 			}			
 		}
+
+                //Ajout de la matrice des variables Auxilliares
+                if (nbVariableAuxilliare != 0)
+                {
+                     float matriceAuxilliaire[][] = new float[nbVariableAuxilliare][nbVariableAuxilliare];
+                    matriceAuxilliaire = creationMatriceAuxilliare();
+                    System.out.println("Taille de la matrice auxilliare : " + matriceAuxilliaire.length);
+                    for (i=0; i<matriceAuxilliaire.length;i++)
+                    {
+                        for(int j=0; j<matriceAuxilliaire.length;j++)
+			{
+				matriceDepartTemp[i][nbVariables+nbVariablesEcart+j]=matriceAuxilliaire[i][j];
+
+			}
+                }
+                }
+
+
 		
 		//Ajout de la matrice maximisant
 		float matriceResult[] = creationMatriceMaximisant();
@@ -101,7 +137,7 @@ public final class Simplexe {
 			matriceDepartTemp[i][matriceDepartTemp[0].length-1]=matriceResult[i];
 		}
 		
-		//Ajout de la matrice de la fonction �conomique
+		//Ajout de la matrice de la fonction economique
 		float matriceFonctionEco[] = creationMatriceFonctionEco();
 		for(i=0;i<matriceFonctionEco.length;i++)
 		{
@@ -132,6 +168,35 @@ public final class Simplexe {
 	    
 	    return matriceIdentite;
 	  }
+
+          public float[][] creationMatriceAuxilliare ()
+          {
+               float matriceAuxilliaire[][] = new float[nbVariableAuxilliare][nbVariableAuxilliare];
+
+               for (int i = 0; i <nbVariableAuxilliare; i++)
+               {
+                   for(int j = 0; j < nbVariableAuxilliare; j++)
+                   {
+                       if(ecouteurContrainte.getTabLigneVariableAuxilliare().get(i) == j)
+                       {
+                           matriceAuxilliaire[i][j]=-1;
+                       }
+                       else
+                       {
+                           matriceAuxilliaire[i][j]=0;
+                       }
+                   }
+               }
+             for (int i=0; i<=matriceAuxilliaire.length ; i++)
+	    {
+	    	for (int j=0; j<=matriceAuxilliaire[0].length  ; j++)
+	    	{
+	    		System.out.print(matriceAuxilliaire[i][j]+" ");
+	    	}
+	        System.out.println();
+	    }
+               return matriceAuxilliaire;
+          }
 	
 	//Creation de la matrice result
 	public float[] creationMatriceMaximisant()
