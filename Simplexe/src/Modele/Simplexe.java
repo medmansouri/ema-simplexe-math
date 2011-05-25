@@ -275,7 +275,7 @@ public final class Simplexe {
                 {                                       
                     for (int i=0; i<maMatrice.getMatrice().length-1;i++)
                     {
-                        if(maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1] / maMatrice.getMatrice()[i][j] < valeurRapport)
+                        if(maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1] / maMatrice.getMatrice()[i][j] < valeurRapport &&  maMatrice.getMatrice()[i][j] >0)
                         {
                            valeurRapport = maMatrice.getMatrice()[i][maMatrice.getMatrice()[0].length-1] / maMatrice.getMatrice()[i][j];
                            pivotTemp = new elementMatrice();
