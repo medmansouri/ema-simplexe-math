@@ -36,21 +36,6 @@ public final class Simplexe {
                 this.matrice = new Matrice(nbContraintes+1,nbVariables+nbVariablesEcart+1);
 	}
 
-        //Constructeur Simplexe pour programme auxilliaire
-        public Simplexe(int nbContraintes, int nbVariables, int nbVariableAuxilliare, InterfaceContraintes ihmContrainte, EcouteurContraintes ecouteurContrainte)
-	{
-		this.nbContraintes=nbContraintes;
-		this.nbVariables=nbVariables;
-		this.nbVariablesEcart=nbContraintes;
-                this.nbVariableAuxilliare=nbVariableAuxilliare;
-		this.ihmContrainte=ihmContrainte;
-                this.ecouteurContrainte=ecouteurContrainte;
-                int taille = nbVariables+nbVariablesEcart+1+nbVariableAuxilliare;
-                this.matriceDepart = new Matrice(nbContraintes+1, taille);
-                this.matrice = new Matrice(nbContraintes+1,taille);
-	}
-
-
         //Fonction pour resoudre le probleme par la premiere methode
 	public void resolutionProblemeMethode1()
 	{
@@ -110,24 +95,7 @@ public final class Simplexe {
 				matriceDepartTemp[i][nbVariables+j]=matriceIdentite[i][j];	
 				
 			}			
-		}
-
-                //Ajout de la matrice des variables Auxilliares
-                if (nbVariableAuxilliare != 0)
-                {
-                     float matriceAuxilliaire[][] = new float[nbVariableAuxilliare][nbVariableAuxilliare];
-                    matriceAuxilliaire = creationMatriceAuxilliare();
-                    System.out.println("Taille de la matrice auxilliare : " + matriceAuxilliaire.length);
-                    for (i=0; i<matriceAuxilliaire.length;i++)
-                    {
-                        for(int j=0; j<matriceAuxilliaire.length;j++)
-			{
-				matriceDepartTemp[i][nbVariables+nbVariablesEcart+j]=matriceAuxilliaire[i][j];
-
-			}
-                }
-                }
-
+		}        
 
 		
 		//Ajout de la matrice maximisant
@@ -168,35 +136,7 @@ public final class Simplexe {
 	    
 	    return matriceIdentite;
 	  }
-
-          public float[][] creationMatriceAuxilliare ()
-          {
-               float matriceAuxilliaire[][] = new float[nbVariableAuxilliare][nbVariableAuxilliare];
-
-               for (int i = 0; i <nbVariableAuxilliare; i++)
-               {
-                   for(int j = 0; j < nbVariableAuxilliare; j++)
-                   {
-                       if(ecouteurContrainte.getTabLigneVariableAuxilliare().get(i) == j)
-                       {
-                           matriceAuxilliaire[i][j]=-1;
-                       }
-                       else
-                       {
-                           matriceAuxilliaire[i][j]=0;
-                       }
-                   }
-               }
-             for (int i=0; i<=matriceAuxilliaire.length ; i++)
-	    {
-	    	for (int j=0; j<=matriceAuxilliaire[0].length  ; j++)
-	    	{
-	    		System.out.print(matriceAuxilliaire[i][j]+" ");
-	    	}
-	        System.out.println();
-	    }
-               return matriceAuxilliaire;
-          }
+          
 	
 	//Creation de la matrice result
 	public float[] creationMatriceMaximisant()
