@@ -380,15 +380,28 @@ public final class Simplexe {
         {
             String texteValeurMax;
             float valeurMax = -(maMatrice.getMatrice()[maMatrice.getMatrice().length-1][maMatrice.getMatrice()[0].length-1]);
-            texteValeurMax = "Le maximum est : " + valeurMax;
+            texteValeurMax = "L'optimum est : " + valeurMax;
             return texteValeurMax;
         }
 
+        //fonction qui affiche le nom de la méthode
+        public String afficheNomMethode ()
+        {
+            if (this.numMethode == 1)
+            {
+                return "Résolution avec la méthode standard";
+            }
+            else
+            {
+                return "Résolution avec la méthode dite de l'alpiniste";
+            }
+        }
+        
         //Affiche caractéristique matrice
         public String toString()
         {
             String resultat;
-            resultat = pivot()+"\n"+variableBase()+"\n"+valeurMaxi(this.matrice);
+            resultat = afficheNomMethode() +"\n"+ pivot()+"\n"+variableBase()+"\n"+valeurMaxi(this.matrice);
             return resultat;
         }
 
